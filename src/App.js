@@ -55,6 +55,21 @@ export default class App extends Component {
     })
   }
 
+  removeItem = itemId => {
+    const { cart, items } = this.state
+
+    this.setState({
+      cart: {
+        ...cart,
+        ids: cart.ids.filter(id => id !== itemId),
+        quantity: {
+          ...cart.quantity,
+          [itemId]: 0
+        } 
+      }
+    })
+  }
+
   render() {
     const { items, cart } = this.state
 
@@ -64,7 +79,7 @@ export default class App extends Component {
         {Object.values(items).map(item => (
           <div key={item.id}>
             <h2>{item.name}</h2>
-            <h2>{item.price}</h2>
+            <h2>$ {item.price}</h2>
             <button onClick={() => this.addItem(item)}>Add To Cart</button>
           </div>
         ))}
@@ -79,6 +94,7 @@ export default class App extends Component {
               <div>
                 <h1>{items[id].name} x {cart.quantity[id]}</h1>
                 <p>Price ${items[id].price}</p>
+                <button onClick={() => this.removeItem(items[id].id)}>Remove From Cart</button>
               </div>
             )}
           </div>
