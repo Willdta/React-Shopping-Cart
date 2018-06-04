@@ -68,6 +68,21 @@ export default class App extends Component {
             <button onClick={() => this.addItem(item)}>Add To Cart</button>
           </div>
         ))}
+
+        <hr style={{ 'marginTop': '200px' }} />
+
+        <h1>Cart</h1>
+
+        {cart.ids.length !== 0 ? Object.keys(items).map(id => (
+          <div key={id}>
+            {cart.quantity[id] > 0 && (
+              <div>
+                <h1>{items[id].name} x {cart.quantity[id]}</h1>
+                <p>Price ${items[id].price}</p>
+              </div>
+            )}
+          </div>
+        )) : <h1>No Items In Your Cart</h1>}
       </div>
     )
   }
