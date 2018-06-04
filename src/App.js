@@ -49,7 +49,7 @@ export default class App extends Component {
   }
 
   removeItem = itemId => {
-    const { cart } = this.state
+    const { cart, items, total } = this.state
 
     this.setState({
       cart: {
@@ -59,7 +59,8 @@ export default class App extends Component {
           ...cart.quantity,
           [itemId]: 0
         } 
-      }
+      },
+      total: total - items[itemId].price * cart.quantity[itemId]
     })
   }
 
@@ -93,7 +94,7 @@ export default class App extends Component {
           </div>
         )) : <h1>No Items In Your Cart</h1>}
         
-        <h1>Total Price: ${total}</h1>
+        { total > 0 && <h1>Total Price: ${total}</h1> }
       </div>
     )
   }
