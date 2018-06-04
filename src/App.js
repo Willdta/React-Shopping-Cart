@@ -9,7 +9,7 @@ export default class App extends Component {
         1: 0, 
         2: 0, 
         3: 0
-      }
+      },
     },
 
     items: {
@@ -18,11 +18,11 @@ export default class App extends Component {
       },  
       
       2: {
-        id: 2, name: 'Github Sweater', price: 50, remaining: 10
+        id: 2, name: 'Github Sweater', price: 50, remaining: 5
       },
       
       3: {
-        id: 3, name: 'Protein Powder', price: 30, remaining: 20
+        id: 3, name: 'Protein Powder', price: 30, remaining: 5
       }
     },
 
@@ -32,9 +32,12 @@ export default class App extends Component {
   addItem = item => {
     const {
       cart,
+      items,
       total
     } = this.state
     
+    console.log(items[item.id].remaining - 1)
+
     this.setState({
       cart: {
         ...cart,
@@ -42,25 +45,39 @@ export default class App extends Component {
         quantity: {
           ...cart.quantity,
           [item.id]: cart.quantity[item.id] + 1
+        },
+      },
+      items: {
+        ...items,
+        [item.id]: {
+          ...item,
+          remaining: item.remaining - 1
         }
       },
-      total: total + item.price
+      total: total + item.price,
     })
   }
 
-  removeItem = itemId => {
+  removeItem = item => {
     const { cart, items, total } = this.state
 
     this.setState({
       cart: {
         ...cart,
-        ids: cart.ids.filter(id => id !== itemId),
+        ids: cart.ids.filter(id => id !== item.id),
         quantity: {
           ...cart.quantity,
-          [itemId]: 0
-        } 
+          [item.id]: 0
+        },
       },
-      total: total - items[itemId].price * cart.quantity[itemId]
+      items: {
+        ...items,
+        [item.id]: {
+          ...item,
+          remaining: 5
+        }
+      },
+      total: total - (items[item.id].price * cart.quantity[item.id])
     })
   }
 
@@ -74,7 +91,11 @@ export default class App extends Component {
           <div key={item.id}>
             <h2>{item.name}</h2>
             <h2>$ {item.price}</h2>
-            <button onClick={() => this.addItem(item)}>Add To Cart</button>
+            {item.remaining === 0 ? (
+              <p style={{ 'color': 'red' }}>Sold Out</p>
+            ) : (
+              <button onClick={() => this.addItem(item)}>Add To Cart</button>
+            )}
           </div>
         ))}
 
@@ -88,7 +109,7 @@ export default class App extends Component {
               <div>
                 <h1>{items[id].name} x {cart.quantity[id]}</h1>
                 <p>Price ${items[id].price * cart.quantity[id]}</p>
-                <button onClick={() => this.removeItem(items[id].id)}>Remove From Cart</button>
+                <button onClick={() => this.removeItem(items[id])}>Remove From Cart</button>
               </div>
             )}
           </div>
