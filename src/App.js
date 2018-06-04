@@ -26,22 +26,15 @@ export default class App extends Component {
       }
     },
 
-    cartItems: []
+    total: 0
   }
 
   addItem = item => {
     const {
       cart,
-      items,
-      cartItems
+      total
     } = this.state
-
-    const cartItem = {
-      id: item.id,
-      name: item.name,
-      price: item.price
-    }
-
+    
     this.setState({
       cart: {
         ...cart,
@@ -51,12 +44,12 @@ export default class App extends Component {
           [item.id]: cart.quantity[item.id] + 1
         }
       },
-      cartItems: [...cartItems, cartItem]
+      total: total + item.price
     })
   }
 
   removeItem = itemId => {
-    const { cart, items } = this.state
+    const { cart } = this.state
 
     this.setState({
       cart: {
@@ -71,7 +64,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { items, cart } = this.state
+    const { items, cart, total } = this.state
 
     return (
       <div className="App">
@@ -84,7 +77,7 @@ export default class App extends Component {
           </div>
         ))}
 
-        <hr style={{ 'marginTop': '200px' }} />
+        <hr style={{ 'margin': '100px' }} />
 
         <h1>Cart</h1>
 
@@ -93,12 +86,14 @@ export default class App extends Component {
             {cart.quantity[id] > 0 && (
               <div>
                 <h1>{items[id].name} x {cart.quantity[id]}</h1>
-                <p>Price ${items[id].price}</p>
+                <p>Price ${items[id].price * cart.quantity[id]}</p>
                 <button onClick={() => this.removeItem(items[id].id)}>Remove From Cart</button>
               </div>
             )}
           </div>
         )) : <h1>No Items In Your Cart</h1>}
+        
+        <h1>Total Price: ${total}</h1>
       </div>
     )
   }
