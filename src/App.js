@@ -26,35 +26,36 @@ export default class App extends Component {
       }
     },
 
-    total: 0
+    total: 0,
+    itemQuantity: 1,
+    removeQuantity: 0
   }
 
   addItem = item => {
     const {
       cart,
       items,
-      total
+      total,
+      itemQuantity
     } = this.state
     
-    console.log(items[item.id].remaining - 1)
-
     this.setState({
       cart: {
         ...cart,
         ids: [...cart.ids, item.id],
         quantity: {
           ...cart.quantity,
-          [item.id]: cart.quantity[item.id] + 1
+          [item.id]: cart.quantity[item.id] + itemQuantity
         },
       },
       items: {
         ...items,
         [item.id]: {
           ...item,
-          remaining: item.remaining - 1
+          remaining: item.remaining - itemQuantity
         }
       },
-      total: total + item.price,
+      total: total + (item.price * itemQuantity),
     })
   }
 
@@ -81,9 +82,46 @@ export default class App extends Component {
     })
   }
 
-  render() {
-    const { items, cart, total } = this.state
+  editQuantity = item => {
+    const { cart, items, removeQuantity } = this.state
 
+    if (removeQuantity > cart.quantity[item.id]) {
+      this.setState(prevState => ({
+        items: {
+          ...items,
+          [item.id]: {
+            ...item,
+            remaining: prevState.items[item.id].remaining - Math.abs(prevState.cart.quantity[item.id] - removeQuantity)
+          }
+        }
+      }))
+    } else {
+      this.setState(prevState => ({
+        items: {
+          ...items,
+          [item.id]: {
+            ...item,
+            remaining: prevState.items[item.id].remaining + Math.abs(prevState.cart.quantity[item.id] - removeQuantity)
+          }
+        }
+      }))
+    }
+
+    this.setState({
+      cart: {
+        ...cart,
+        quantity: {
+          ...cart.quantity,
+          [item.id]: parseInt(removeQuantity, 10)
+        }
+      },
+      total: items[item.id].price * removeQuantity
+    })
+  }
+  
+  render() {
+    const { items, cart, total, itemQuantity } = this.state
+  
     return (
       <div className="App">
         <h1>Shopping Area</h1>
@@ -94,7 +132,20 @@ export default class App extends Component {
             {item.remaining === 0 ? (
               <p style={{ 'color': 'red' }}>Sold Out</p>
             ) : (
-              <button onClick={() => this.addItem(item)}>Add To Cart</button>
+              <div>
+                <p>Remaining: {item.remaining}</p>
+                <input 
+                  type="number" 
+                  value={ itemQuantity }
+                  onChange={e => {
+                    this.setState({ itemQuantity: parseInt(e.target.value, 10) })
+                  }}
+                  placeholder="quantity"
+                  min="1"
+                  max="5"
+                />
+                <button onClick={() => this.addItem(item)}>Add To Cart</button>
+              </div>
             )}
           </div>
         ))}
@@ -107,9 +158,19 @@ export default class App extends Component {
           <div key={id}>
             {cart.quantity[id] > 0 && (
               <div>
-                <h1>{items[id].name} x {cart.quantity[id]}</h1>
+                <h1>{items[id].name}</h1>
+                <p>Quantity: 
+                  <input 
+                    type="number"
+                    defaultValue={cart.quantity[id]}
+                    min="1"
+                    max="5"
+                    onChange={e => this.setState({ removeQuantity: parseInt(e.target.value, 10) })}
+                    onBlur={() => this.editQuantity(items[id])}
+                  />
+                </p>
                 <p>Price ${items[id].price * cart.quantity[id]}</p>
-                <button onClick={() => this.removeItem(items[id])}>Remove From Cart</button>
+                <button onClick={e => this.removeItem(items[id])}>Remove From Cart</button>
               </div>
             )}
           </div>
