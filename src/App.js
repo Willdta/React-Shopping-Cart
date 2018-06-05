@@ -14,20 +14,19 @@ export default class App extends Component {
 
     items: {
       1: {
-        id: 1, name: 'Yeezys', price: 300, remaining: 5
+        id: 1, name: 'Yeezys', price: 300, remaining: 5, quantity: 0
       },  
       
       2: {
-        id: 2, name: 'Github Sweater', price: 50, remaining: 5
+        id: 2, name: 'Github Sweater', price: 50, remaining: 5, quantity: 0
       },
       
       3: {
-        id: 3, name: 'Protein Powder', price: 30, remaining: 5
+        id: 3, name: 'Protein Powder', price: 30, remaining: 5, quantity: 0
       }
     },
 
     total: 0,
-    itemQuantity: 1,
     removeQuantity: 0
   }
 
@@ -35,27 +34,26 @@ export default class App extends Component {
     const {
       cart,
       items,
-      total,
-      itemQuantity
+      total
     } = this.state
-    
+
     this.setState({
       cart: {
         ...cart,
         ids: [...cart.ids, item.id],
         quantity: {
           ...cart.quantity,
-          [item.id]: cart.quantity[item.id] + itemQuantity
+          [item.id]: cart.quantity[item.id] + items[item.id].quantity
         },
       },
       items: {
         ...items,
         [item.id]: {
           ...item,
-          remaining: item.remaining - itemQuantity
+          remaining: item.remaining - items[item.id].quantity
         }
       },
-      total: total + (item.price * itemQuantity),
+      total: total + (item.price * items[item.id].quantity),
     })
   }
 
@@ -118,9 +116,25 @@ export default class App extends Component {
       total: items[item.id].price * removeQuantity
     })
   }
-  
+
+  handleChange = (e, item) => {
+    const { items } = this.state
+
+    let value = parseInt(e.target.value, 10)
+
+    this.setState(prevState => ({
+      items: {
+        ...items,
+        [item.id]: {
+          ...item,
+          quantity: value 
+        }
+      }
+    }))
+  }
+
   render() {
-    const { items, cart, total, itemQuantity } = this.state
+    const { items, cart, total,  } = this.state
   
     return (
       <div className="App">
@@ -135,14 +149,12 @@ export default class App extends Component {
               <div>
                 <p>Remaining: {item.remaining}</p>
                 <input 
-                  type="number" 
-                  value={ itemQuantity }
-                  onChange={e => {
-                    this.setState({ itemQuantity: parseInt(e.target.value, 10) })
-                  }}
+                  type="number"
+                  value={ item.quantity }
+                  onChange={e => this.handleChange(e, item)}
                   placeholder="quantity"
-                  min="1"
-                  max="5"
+                  min={1}
+                  max={5}
                 />
                 <button onClick={() => this.addItem(item)}>Add To Cart</button>
               </div>
