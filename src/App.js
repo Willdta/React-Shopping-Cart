@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-import _ from 'lodash'
 
 export default class App extends Component {
   state = {
@@ -27,8 +26,8 @@ export default class App extends Component {
       }
     },
 
-    total: 0,
-    editQuantity: 0
+    editQuantity: 0,
+    total: 0
   }
 
   addItem = item => {
@@ -38,28 +37,31 @@ export default class App extends Component {
       total
     } = this.state
 
+    const { id, remaining, quantity, price } = item
+
     this.setState({
       cart: {
         ...cart,
-        ids: [...cart.ids, item.id],
+        ids: [...cart.ids, id],
         quantity: {
           ...cart.quantity,
-          [item.id]: cart.quantity[item.id] + items[item.id].quantity
+          [id]: cart.quantity[id] + quantity
         },
       },
       items: {
         ...items,
-        [item.id]: {
+        [id]: {
           ...item,
-          remaining: item.remaining - items[item.id].quantity
+          remaining: remaining - quantity
         }
       },
-      total: total + (item.price * items[item.id].quantity),
+      total: total + (price * quantity)
     })
   }
 
   removeItem = item => {
     const { cart, items, total } = this.state
+    const { id, price } = item
 
     this.setState({
       cart: {
@@ -67,53 +69,46 @@ export default class App extends Component {
         ids: cart.ids.filter(id => id !== item.id),
         quantity: {
           ...cart.quantity,
-          [item.id]: 0
+          [id]: 0
         },
       },
       items: {
         ...items,
-        [item.id]: {
+        [id]: {
           ...item,
           remaining: 5
         }
       },
-      total: total - (items[item.id].price * cart.quantity[item.id])
+      total: total - (price * cart.quantity[id])
     })
   }
   
   editQuantity = item => {
-    const { cart, items, total, editQuantity } = this.state
-    
-    if (editQuantity > cart.quantity[item.id]) {
-      this.setState(prevState => ({
-        items: {
-          ...items,
-          [item.id]: {
-            ...item,
-            remaining: prevState.items[item.id].remaining - Math.abs(prevState.cart.quantity[item.id] - editQuantity)
-          }
-        }
-      }))
-    } else {
-      this.setState(prevState => ({
-        items: {
-          ...items,
-          [item.id]: {
-            ...item,
-            remaining: prevState.items[item.id].remaining + Math.abs(prevState.cart.quantity[item.id] - editQuantity)
-          }
-        }
-      }))
-    }
+    const { cart, items, editQuantity } = this.state
+    const { price, id } = item
 
-    if (cart.quantity[item.id] < editQuantity) {
-      this.setState({
-        total: total + item.price * (Math.abs(cart.quantity[item.id] - editQuantity))
-      })    
+    if (editQuantity > cart.quantity[id]) {
+      this.setState(prevState => ({
+        items: {
+          ...items,
+          [id]: {
+            ...item,
+            remaining: prevState.items[id].remaining - Math.abs(prevState.cart.quantity[id] - editQuantity)
+          }
+        },
+        total: prevState.total + price * (Math.abs(cart.quantity[id] - editQuantity))
+      }))
     } else {
-      this.setState({
-        total: total - item.price * (Math.abs(cart.quantity[item.id] - editQuantity))
-      }) 
+      this.setState(prevState => ({
+        items: {
+          ...items,
+          [id]: {
+            ...item,
+            remaining: prevState.items[id].remaining + Math.abs(prevState.cart.quantity[id] - editQuantity)
+          }
+        },
+        total: prevState.total - price * (Math.abs(cart.quantity[id] - editQuantity))
+      }))
     }
     
     this.setState({
@@ -121,21 +116,22 @@ export default class App extends Component {
         ...cart,
         quantity: {
           ...cart.quantity,
-          [item.id]: parseInt(editQuantity, 10)
+          [id]: parseInt(editQuantity, 10)
         },
-      },
+      }
     })
   }
 
   handleQuantityChange = (e, item) => {
     const { items } = this.state
+    const { id } = item
 
     const value = parseInt(e.target.value, 10)
 
     this.setState(prevState => ({
       items: {
         ...items,
-        [item.id]: {
+        [id]: {
           ...item,
           quantity: value 
         }
@@ -186,7 +182,8 @@ export default class App extends Component {
                 <p>Quantity: 
                   <input 
                     type="number"
-                    defaultValue={items[id].quantity}
+                    // defaultValue={items[id].quantity}
+                    defaultValue={cart.quantity[id]}
                     min={1}
                     max={5}
                     onChange={e => this.setState({ editQuantity: parseInt(e.target.value, 10) })}
