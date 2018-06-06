@@ -31,36 +31,36 @@ export default class App extends Component {
   }
 
   addItem = (item, e) => {
-    const { cart, items, total } = this.state
+    const { cart, items } = this.state
     const { id, remaining, quantity, price } = item
 
     if (quantity <= remaining) {
-      this.setState({
+      this.setState(prevState => ({
         cart: {
           ...cart,
-          ids: [...cart.ids, id],
+          ids: [...prevState.cart.ids, id],
           quantity: {
             ...cart.quantity,
-            [id]: cart.quantity[id] + quantity
+            [id]: prevState.cart.quantity[id] + quantity
           },
         },
         items: {
           ...items,
           [id]: {
             ...item,
-            remaining: remaining - quantity
+            remaining: prevState.items[id].remaining - quantity
           }
         },
-        total: total + (price * quantity)
-      })
+        total: prevState.total + (price * quantity)
+      }))
     }
   }
 
   removeItem = item => {
-    const { cart, items, total } = this.state
+    const { cart, items } = this.state
     const { id, price } = item
 
-    this.setState({
+    this.setState(prevState => ({
       cart: {
         ...cart,
         ids: cart.ids.filter(id => id !== item.id),
@@ -76,8 +76,8 @@ export default class App extends Component {
           remaining: 5
         }
       },
-      total: total - (price * cart.quantity[id])
-    })
+      total: prevState.total - (price * cart.quantity[id])
+    }))
   }
   
   editQuantity = item => {
@@ -90,7 +90,7 @@ export default class App extends Component {
           ...items,
           [id]: {
             ...item,
-            remaining: prevState.items[id].remaining - Math.abs(prevState.cart.quantity[id] - editQuantity)
+            remaining: prevState.items[id].remaining - Math.abs(cart.quantity[id] - editQuantity)
           }
         },
         total: prevState.total + price * (Math.abs(cart.quantity[id] - editQuantity))
@@ -114,7 +114,7 @@ export default class App extends Component {
         quantity: {
           ...cart.quantity,
           [id]: parseInt(editQuantity, 10)
-        },
+        }
       }
     })
   }
