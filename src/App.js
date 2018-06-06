@@ -30,33 +30,30 @@ export default class App extends Component {
     total: 0
   }
 
-  addItem = item => {
-    const {
-      cart,
-      items,
-      total
-    } = this.state
-
+  addItem = (item, e) => {
+    const { cart, items, total } = this.state
     const { id, remaining, quantity, price } = item
 
-    this.setState({
-      cart: {
-        ...cart,
-        ids: [...cart.ids, id],
-        quantity: {
-          ...cart.quantity,
-          [id]: cart.quantity[id] + quantity
+    if (quantity <= remaining) {
+      this.setState({
+        cart: {
+          ...cart,
+          ids: [...cart.ids, id],
+          quantity: {
+            ...cart.quantity,
+            [id]: cart.quantity[id] + quantity
+          },
         },
-      },
-      items: {
-        ...items,
-        [id]: {
-          ...item,
-          remaining: remaining - quantity
-        }
-      },
-      total: total + (price * quantity)
-    })
+        items: {
+          ...items,
+          [id]: {
+            ...item,
+            remaining: remaining - quantity
+          }
+        },
+        total: total + (price * quantity)
+      })
+    }
   }
 
   removeItem = item => {
@@ -162,7 +159,7 @@ export default class App extends Component {
                   min={1}
                   max={5}
                 />
-                <button onClick={() => this.addItem(item)}>Add To Cart</button>
+                <button onClick={e => this.addItem(item, e)}>Add To Cart</button>
               </div>
             )}
           </div>
@@ -182,8 +179,8 @@ export default class App extends Component {
                 <p>Quantity: 
                   <input 
                     type="number"
-                    // defaultValue={items[id].quantity}
                     defaultValue={cart.quantity[id]}
+                    key={cart.quantity[id]}
                     min={1}
                     max={5}
                     onChange={e => this.setState({ editQuantity: parseInt(e.target.value, 10) })}
@@ -191,6 +188,7 @@ export default class App extends Component {
                   />
                 </p>
                 <p>Price ${items[id].price * cart.quantity[id]}</p>
+                <p>Quantity: {cart.quantity[id]}</p>
                 <button onClick={e => this.removeItem(items[id])}>Remove From Cart</button>
               </div>
             )}
