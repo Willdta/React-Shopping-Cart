@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
+import RenderItems from './components/RenderItems'
 
 export default class App extends Component {
   state = {
@@ -142,7 +143,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <h1>Shopping Area</h1>
-        {Object.values(items).map(item => (
+        {/* {Object.values(items).map(item => (
           <div key={item.id}>
             <h2>{item.name}</h2>
             <h2>$ {item.price}</h2>
@@ -163,7 +164,9 @@ export default class App extends Component {
               </div>
             )}
           </div>
-        ))}
+        ))} */}
+
+        <RenderItems />
 
         <hr style={{ 'margin': '100px' }} />
 
