@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
         ids: [...state.ids, action.payload.id],
         quantity: {
           ...state.quantity,
-          [action.payload.id]: state.quantity[action.payload.id] + 1
+          [action.payload.id]: state.quantity[action.payload.id] + action.payload.value
         }
       }
 

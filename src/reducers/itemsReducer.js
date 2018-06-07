@@ -39,11 +39,11 @@ export default (state = initialState, action) => {
           ...state.items, 
           [action.payload.id]: {
             ...state.items[action.payload.id],
-            remaining: state.items[action.payload.id].remaining - 1,
-            quantity: state.items[action.payload.id].quantity + 1
+            remaining: state.items[action.payload.id].remaining - action.payload.value,
+            quantity: state.items[action.payload.id].quantity + action.payload.value
           }
         },
-        total: state.total + state.items[action.payload.id].price
+        total: state.total + (state.items[action.payload.id].price * action.payload.value)
       }
 
     case 'REMOVE_FROM_CART':

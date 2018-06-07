@@ -18,7 +18,7 @@ class RenderCart extends Component {
               <button onClick={() => this.props.removeItem(items[id])}>Remove From Cart</button>
             </div>
           )
-        ) )
+        ))
       ) : (
         <h5>No Items in your cart</h5>
       )
