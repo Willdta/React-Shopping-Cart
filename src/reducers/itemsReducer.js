@@ -5,7 +5,7 @@ const initialState = {
       name: 'Yeezys',
       price: 50,
       remaining: 5,
-      quantity: 1
+      quantity: 0
     },
   
     2: {
@@ -13,7 +13,7 @@ const initialState = {
       name: 'Github Sweater',
       price: 100,
       remaining: 5,
-      quantity: 1
+      quantity: 0
     },
   
    3: {
@@ -21,7 +21,7 @@ const initialState = {
       name: 'Protein Powder',
       price: 200,
       remaining: 5,
-      quantity: 1
+      quantity: 0
     }
   },
   total: 0
@@ -39,7 +39,8 @@ export default (state = initialState, action) => {
           ...state.items, 
           [action.payload.id]: {
             ...state.items[action.payload.id],
-            remaining: state.items[action.payload.id].remaining - 1
+            remaining: state.items[action.payload.id].remaining - 1,
+            quantity: state.items[action.payload.id].quantity + 1
           }
         },
         total: state.total + state.items[action.payload.id].price
@@ -48,10 +49,15 @@ export default (state = initialState, action) => {
     case 'REMOVE_FROM_CART':
       return {
         ...state,
-        [action.payload.id]: {
-          ...state.items[action.payload.id],
-          remaining: 5
-        }
+        items: {
+          ...state.items,
+          [action.payload.id]: {
+            ...state.items[action.payload.id],
+            remaining: 5,
+            quantity: 0
+          }
+        },
+        total: state.total - (state.items[action.payload.id].price * state.items[action.payload.id].quantity)
       }
 
     default:
