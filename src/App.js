@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import RenderItems from './components/RenderItems'
+import RenderCart from './components/RenderCart'
 
 export default class App extends Component {
   state = {
@@ -172,9 +173,11 @@ export default class App extends Component {
 
         <h1>Cart</h1>
 
-        { total > 0 && <h1>Total Price: ${total}</h1> }
+        <RenderCart />
 
-        {cart.ids.length !== 0 ? Object.keys(items).map(id => (
+        {/* { total > 0 && <h1>Total Price: ${total}</h1> } */}
+
+        {/* {cart.ids.length !== 0 ? Object.keys(items).map(id => (
           <div key={id}>
             {cart.quantity[id] > 0 && (
               <div>
@@ -196,7 +199,9 @@ export default class App extends Component {
               </div>
             )}
           </div>
-        )) : <h1>No Items In Your Cart</h1>}
+        )) : <h1>No Items In Your Cart</h1>} */}
+
+
       </div>
     )
   }
