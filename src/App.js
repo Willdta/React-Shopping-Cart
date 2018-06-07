@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import RenderItems from './components/RenderItems'
 import RenderCart from './components/RenderCart'
+import Total from './components/Total'
 
 export default class App extends Component {
   state = {
@@ -173,6 +174,7 @@ export default class App extends Component {
 
         <h1>Cart</h1>
 
+        <Total />
         <RenderCart />
 
         {/* { total > 0 && <h1>Total Price: ${total}</h1> } */}

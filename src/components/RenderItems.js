@@ -10,7 +10,6 @@ class RenderItems extends Component {
   
   render() {
     const { items } = this.props
-
     return (
       items && Object.values(items).map(item => (
         <div key={item.id}>
@@ -25,7 +24,7 @@ class RenderItems extends Component {
 }
 
 const mapStateToProps = ({ items }) => {
-  return { items }
+  return { items: items.items }
 }
 
 export default connect(mapStateToProps, { renderItems, addItem })(RenderItems)

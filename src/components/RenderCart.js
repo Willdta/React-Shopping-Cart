@@ -27,7 +27,7 @@ class RenderCart extends Component {
 }
 
 const mapStateToProps = ({ cart, items }) => {
-  return { cart, items }
+  return { cart, items: items.items }
 }
 
 export default connect(mapStateToProps, { removeItem })(RenderCart)
