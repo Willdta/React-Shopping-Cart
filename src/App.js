@@ -139,7 +139,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { items, cart, total } = this.state
+    // const { items, cart, total } = this.state
 
     return (
       <div className="App">

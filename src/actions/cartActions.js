@@ -4,8 +4,10 @@ export const renderCart = () => ({
 
 export const addItem = (item, id) => ({
   type: 'ADD_TO_CART',
-  payload: {
-    ...item,
-    remaining: item.remaining - 1
-  }
+  payload: item
+})
+
+export const removeItem = (item, id) => ({
+  type: 'REMOVE_FROM_CART',
+  payload: item
 })

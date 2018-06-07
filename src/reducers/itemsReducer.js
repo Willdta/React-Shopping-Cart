@@ -26,8 +26,23 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'RENDER_ITEMS':
-      return { ...state }
+    case 'ADD_TO_CART':
+      return { 
+        ...state,
+        [action.payload.id]: {
+          ...state[action.payload.id],
+          remaining: state[action.payload.id].remaining - 1
+        }
+      }
+
+    case 'REMOVE_FROM_CART':
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...state[action.payload.id],
+          remaining: 5
+        }
+      }
 
     default:
       return state

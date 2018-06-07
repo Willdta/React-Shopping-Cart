@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import RenderItem from './RenderItem'
 import { renderItems } from '../actions/itemActions'
 import { addItem } from '../actions/cartActions'
 
