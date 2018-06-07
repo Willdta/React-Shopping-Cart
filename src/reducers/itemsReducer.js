@@ -60,6 +60,32 @@ export default (state = initialState, action) => {
         total: state.total - (state.items[action.payload.id].price * state.items[action.payload.id].quantity)
       }
 
+    case 'INCREMENT_CART_QUANTITY':
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [action.payload.id]: {
+            ...state.items[action.payload.id],
+            remaining: state.items[action.payload.id].remaining - Math.abs(state.items[action.payload.id].quantity - action.payload.value),
+            quantity: action.payload.value
+          }
+        }
+      }
+
+    case 'DECREMENT_CART_QUANTITY':
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [action.payload.id]: {
+            ...state.items[action.payload.id],
+            remaining: state.items[action.payload.id].remaining + Math.abs(state.items[action.payload.id].quantity - action.payload.value),
+            quantity: action.payload.value
+          }
+        }
+      }
+
     default:
       return state
   }

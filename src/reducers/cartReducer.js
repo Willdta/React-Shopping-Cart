@@ -19,6 +19,24 @@ export default (state = initialState, action) => {
         }
       }
 
+    case 'INCREMENT_CART_QUANTITY':
+      return {
+        ...state,
+        quantity: {
+          ...state.quantity,
+          [action.payload.id]: action.payload.value
+        }
+      }
+
+    case 'DECREMENT_CART_QUANTITY':
+      return {
+        ...state,
+        quantity: {
+          ...state.quantity,
+          [action.payload.id]: action.payload.value
+        }
+      }
+
     case 'REMOVE_FROM_CART':
       return {
         ...state,

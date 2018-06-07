@@ -16,9 +16,6 @@ class RenderItems extends Component {
     const { items } = this.props
     const { itemQuantity } = this.state
     
-    console.log(itemQuantity);
-    
-
     return (
       items && Object.values(items).map(item => (
         <div key={item.id}>
