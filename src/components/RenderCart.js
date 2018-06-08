@@ -5,6 +5,7 @@ import {
   incrementCartQuantity, 
   decrementCartQuantity 
 } from '../actions/cartActions'
+import { Link } from 'react-router-dom'
 
 class RenderCart extends Component {
   editCartQuantity = (item, e) => {
@@ -19,10 +20,11 @@ class RenderCart extends Component {
   }
 
   renderCart = () => {
-    const { cart, items } = this.props
+    const { cart, items, total } = this.props
     
     return (
       <div>
+        <Link to="/">Back</Link>
         <h1>Cart</h1>
         {cart.ids.length !== 0 ? (
           Object.keys(items).map(id => (
@@ -46,6 +48,10 @@ class RenderCart extends Component {
         ) : (
           <h5>No Items in your cart</h5>
         )}
+
+        {total > 0 && (
+          <h3>Total: ${total}</h3>
+        )}
       </div>
     )
   }
@@ -54,7 +60,7 @@ class RenderCart extends Component {
 }
 
 const mapStateToProps = ({ cart, items }) => {
-  return { cart, items: items.items }
+  return { cart, items: items.items, total: items.total }
 }
 
 export default connect(mapStateToProps, 

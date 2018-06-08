@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addItem } from '../actions/cartActions'
+import { Link } from 'react-router-dom'
 
 class RenderItem extends Component {
   state = {
@@ -30,6 +31,7 @@ class RenderItem extends Component {
           placeholder="quantity"
         />
         <button onClick={() => this.props.addItem(item, itemQuantity)}>Add To Cart</button>
+        <Link to={`/item/${item.id}`}>View Item</Link>
       </div>
     )
   }

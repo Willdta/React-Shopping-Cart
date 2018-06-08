@@ -40,7 +40,7 @@ export default (state = initialState, action) => {
     case RENDER_ITEMS:
       return { ...state }
 
-    case 'ADD_TO_CART':
+    case ADD_TO_CART:
       return { 
         ...state,
         items: {

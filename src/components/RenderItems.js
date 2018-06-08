@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { renderItems } from '../actions/itemActions'
+import { Link } from 'react-router-dom'
 import RenderItem from './RenderItem'
 
 class RenderItems extends Component {
@@ -18,6 +19,7 @@ class RenderItems extends Component {
           {Object.values(items).map(item => (
             <RenderItem item={item} key={item.id} />
           ))}
+          <Link to="/cart">View Cart</Link>
         </div>
       )
     )
