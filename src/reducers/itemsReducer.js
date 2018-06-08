@@ -51,13 +51,13 @@ export default (state = initialState, action) => {
         ...state,
         items: {
           ...state.items,
-          [action.payload.id]: {
-            ...state.items[action.payload.id],
+          [action.payload]: {
+            ...state.items[action.payload],
             remaining: 5,
             quantity: 0
           }
         },
-        total: state.total - (state.items[action.payload.id].price * state.items[action.payload.id].quantity)
+        total: state.total - (state.items[action.payload].price * state.items[action.payload].quantity)
       }
 
     case 'INCREMENT_CART_QUANTITY':

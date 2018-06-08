@@ -40,10 +40,10 @@ export default (state = initialState, action) => {
     case 'REMOVE_FROM_CART':
       return {
         ...state,
-        ids: state.ids.filter(id => id !== action.payload.id),
+        ids: state.ids.filter(id => id !== action.payload),
         quantity: {
           ...state.quantity,
-          [action.payload.id]: 0
+          [action.payload]: 0
         }
       }
 
