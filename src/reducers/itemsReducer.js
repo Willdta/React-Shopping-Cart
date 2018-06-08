@@ -1,3 +1,11 @@
+import {
+  RENDER_ITEMS,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  INCREMENT_CART_QUANTITY,
+  DECREMENT_CART_QUANTITY
+} from '../actions/types'
+
 const initialState = {
   items: {
     1: {
@@ -29,7 +37,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'RENDER_ITEMS':
+    case RENDER_ITEMS:
       return { ...state }
 
     case 'ADD_TO_CART':
@@ -46,7 +54,7 @@ export default (state = initialState, action) => {
         total: state.total + (state.items[action.payload.id].price * action.payload.value)
       }
 
-    case 'REMOVE_FROM_CART':
+    case REMOVE_FROM_CART:
       return {
         ...state,
         items: {
@@ -60,7 +68,7 @@ export default (state = initialState, action) => {
         total: state.total - (state.items[action.payload].price * state.items[action.payload].quantity)
       }
 
-    case 'INCREMENT_CART_QUANTITY':
+    case INCREMENT_CART_QUANTITY:
       return {
         ...state,
         items: {
@@ -74,7 +82,7 @@ export default (state = initialState, action) => {
         total: state.total + state.items[action.payload.id].price * Math.abs(state.items[action.payload.id].quantity - action.payload.value)
       }
       
-      case 'DECREMENT_CART_QUANTITY':
+      case DECREMENT_CART_QUANTITY:
       return {
         ...state,
         items: {

@@ -1,3 +1,10 @@
+import {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  INCREMENT_CART_QUANTITY,
+  DECREMENT_CART_QUANTITY
+} from '../actions/types'
+
 const initialState = {
   ids: [],
   quantity: {
@@ -9,7 +16,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_TO_CART':
+    case ADD_TO_CART:
       return {
         ...state,
         ids: [...state.ids, action.payload.id],
@@ -19,7 +26,7 @@ export default (state = initialState, action) => {
         }
       }
 
-    case 'INCREMENT_CART_QUANTITY':
+    case INCREMENT_CART_QUANTITY:
       return {
         ...state,
         quantity: {
@@ -28,7 +35,7 @@ export default (state = initialState, action) => {
         }
       }
 
-    case 'DECREMENT_CART_QUANTITY':
+    case DECREMENT_CART_QUANTITY:
       return {
         ...state,
         quantity: {
@@ -37,7 +44,7 @@ export default (state = initialState, action) => {
         }
       }
 
-    case 'REMOVE_FROM_CART':
+    case REMOVE_FROM_CART:
       return {
         ...state,
         ids: state.ids.filter(id => id !== action.payload),
