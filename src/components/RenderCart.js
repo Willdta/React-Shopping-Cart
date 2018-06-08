@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { removeItem, incrementCartQuantity, decrementCartQuantity  } from '../actions/cartActions'
+import { removeItem, incrementCartQuantity, decrementCartQuantity } from '../actions/cartActions'
 
 class RenderCart extends Component {
   editCartQuantity = (item, e) => {
-    const { items } = this.props
+    const { cart } = this.props
 
-    if (e.target.value > items[item.id].quantity) {
-      this.props.incrementCartQuantity(item, e.target.value)
+    if (e.target.value > cart.quantity[item.id]) {
+      this.props.incrementCartQuantity(item, parseInt(e.target.value, 10))
     } else {
-      this.props.decrementCartQuantity(item, e.target.value)
+      this.props.decrementCartQuantity(item, parseInt(e.target.value, 10))
     }
   }
   
   render() {
-    const { items, cart } = this.props
+    const { cart } = this.props
+    const { items } = this.props.items
 
     return (
       cart.ids.length !== 0 ? (
@@ -43,7 +44,7 @@ class RenderCart extends Component {
 }
 
 const mapStateToProps = ({ cart, items }) => {
-  return { cart, items: items.items }
+  return { cart, items }
 }
 
-export default connect(mapStateToProps, { removeItem, incrementCartQuantity, decrementCartQuantity  })(RenderCart)
+export default connect(mapStateToProps, { removeItem, incrementCartQuantity, decrementCartQuantity })(RenderCart)

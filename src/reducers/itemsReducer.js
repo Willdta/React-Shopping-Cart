@@ -70,10 +70,11 @@ export default (state = initialState, action) => {
             remaining: state.items[action.payload.id].remaining - Math.abs(state.items[action.payload.id].quantity - action.payload.value),
             quantity: action.payload.value
           }
-        }
+        },
+        total: state.total + state.items[action.payload.id].price * Math.abs(state.items[action.payload.id].quantity - action.payload.value)
       }
-
-    case 'DECREMENT_CART_QUANTITY':
+      
+      case 'DECREMENT_CART_QUANTITY':
       return {
         ...state,
         items: {
@@ -83,7 +84,8 @@ export default (state = initialState, action) => {
             remaining: state.items[action.payload.id].remaining + Math.abs(state.items[action.payload.id].quantity - action.payload.value),
             quantity: action.payload.value
           }
-        }
+        },
+        total: state.total - state.items[action.payload.id].price * Math.abs(state.items[action.payload.id].quantity - action.payload.value)
       }
 
     default:
