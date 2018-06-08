@@ -1,6 +1,5 @@
 import {
   RENDER_ITEMS,
-  VIEW_ITEM,
   ADD_TO_CART,
   REMOVE_FROM_CART,
   INCREMENT_CART_QUANTITY,
@@ -14,6 +13,7 @@ const initialState = {
       name: 'Yeezys',
       price: 50,
       remaining: 5,
+      initialStock: 5,
       quantity: 0
     },
   
@@ -22,6 +22,7 @@ const initialState = {
       name: 'Github Sweater',
       price: 100,
       remaining: 5,
+      initialStock: 5,
       quantity: 0
     },
   
@@ -30,10 +31,10 @@ const initialState = {
       name: 'Protein Powder',
       price: 200,
       remaining: 5,
+      initialStock: 5,      
       quantity: 0
     }
   },
-  item: null,
   total: 0
 }
 
@@ -41,12 +42,6 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case RENDER_ITEMS:
       return { ...state }
-
-    case VIEW_ITEM:
-      return {
-        ...state,
-        item: action.payload
-      }
 
     case ADD_TO_CART:
       return { 
