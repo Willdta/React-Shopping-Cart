@@ -16,9 +16,11 @@ class RenderItems extends Component {
       items && (
         <div>
           <h1>Shopping Area</h1>
-          {Object.values(items).map(item => (
-            <RenderItem item={item} key={item.id} />
-          ))}
+          <div style={{ 'display': 'flex', 'justifyContent': 'space-around' }}>
+            {Object.values(items).map(item => (
+              <RenderItem item={item} key={item.id} />
+            ))}
+          </div>
           <Link to="/cart">View Cart</Link>
         </div>
       )
@@ -26,8 +28,8 @@ class RenderItems extends Component {
   }
 }
 
-const mapStateToProps = ({ items }) => {
-  return { items: items.items }
-}
+const mapStateToProps = ({ items }) => ({
+  items: items.items
+})
 
 export default connect(mapStateToProps, { renderItems })(RenderItems)

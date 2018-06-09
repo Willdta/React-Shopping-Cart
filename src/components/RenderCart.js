@@ -12,14 +12,16 @@ class RenderCart extends Component {
         <Link to="/">Back</Link>
         <h1>Cart</h1>
         {cart.ids.length !== 0 ? (
-          Object.keys(items).map(id => (
-            <RenderCartItem 
-              key={id} 
-              cart={cart} 
-              items={items} 
-              id={id} 
-            />
-          ))
+          <div>
+            {Object.keys(items).map(id => (
+              <RenderCartItem 
+                key={id} 
+                cart={cart} 
+                items={items} 
+                id={id} 
+              />
+            ))}
+          </div>
         ) : (
           <h5>No Items in your cart</h5>
         )}
@@ -34,8 +36,10 @@ class RenderCart extends Component {
   render() { return this.renderCart() }
 }
 
-const mapStateToProps = ({ cart, items }) => {
-  return { cart, items: items.items, total: items.total }
-}
+const mapStateToProps = ({ cart, items }) => ({
+  cart, 
+  items: items.items, 
+  total: items.total
+})
 
 export default connect(mapStateToProps)(RenderCart)

@@ -11,6 +11,7 @@ const initialState = {
     1: {
       id: 1,
       name: 'Yeezys',
+      image: 'https://www.sneakermake.com/wp-content/uploads/2017/05/NEW-2017-UA-Adidas-Yeezy-350-V2-Boost-SPLV-Bape-Shark-2-400x400.jpg',
       price: 50,
       remaining: 5,
       initialStock: 5,
@@ -20,6 +21,7 @@ const initialState = {
     2: {
       id: 2,
       name: 'Github Sweater',
+      image: 'https://cdn.shopify.com/s/files/1/0262/3477/products/product-image-457055122.jpg?v=1510010749',
       price: 100,
       remaining: 5,
       initialStock: 5,
@@ -29,6 +31,7 @@ const initialState = {
    3: {
       id: 3,
       name: 'Protein Powder',
+      image: 'https://cdn.hoppingo.com/products/163472/medium/inlife-whey-protein-powder-2-lbs--chocolate-flavour--body-building-supplement----------------------------------------------2lb-.jpg',
       price: 200,
       remaining: 5,
       initialStock: 5,      
@@ -85,7 +88,7 @@ export default (state = initialState, action) => {
         total: state.total + state.items[action.payload.id].price * Math.abs(state.items[action.payload.id].quantity - action.payload.value)
       }
       
-      case DECREMENT_CART_QUANTITY:
+    case DECREMENT_CART_QUANTITY:
       return {
         ...state,
         items: {

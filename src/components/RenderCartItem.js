@@ -8,7 +8,7 @@ class RenderCartItem extends Component {
     const { id } = item
     const { value } = e.target
 
-    if (parseInt(value, 10) === 0 || value === '' || value > item.initialStock) {
+    if (parseInt(value, 10) === 0 || value === '' || value < 0) {
       e.preventDefault()
     } else if (value > cart.quantity[id]) {
       this.props.incrementCartQuantity(item, parseInt(value, 10))
@@ -23,6 +23,7 @@ class RenderCartItem extends Component {
     return (
       cart.quantity[id] > 0 && (
         <div key={id}>
+          <img src={items[id].image} alt="shoes" />
           <h5>{items[id].name}</h5>
           <h5>Total Item Price: ${items[id].price * cart.quantity[id]}</h5>
           <input 

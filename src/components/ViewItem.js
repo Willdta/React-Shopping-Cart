@@ -17,7 +17,7 @@ class ViewItem extends Component {
   addItem = item => {
     const { itemQuantity } = this.state
 
-    if (itemQuantity <= item.remaining && itemQuantity !== isNaN && itemQuantity !== 0) {
+    if (itemQuantity > 0 && itemQuantity <= item.remaining && itemQuantity !== isNaN && itemQuantity !== 0) {
       this.props.addItem(item, itemQuantity)
     }
   }
@@ -31,6 +31,7 @@ class ViewItem extends Component {
         <Link to="/cart">View Cart</Link>
         {item && (
           <div>
+            <img src={item.image} alt="shoes" />
             <h2>{item.name}</h2>
             <h5>$ {item.price}</h5>
             <h5>Remaining: {item.remaining}</h5>
@@ -49,12 +50,10 @@ class ViewItem extends Component {
   }
 }
 
-const mapStateToProps = ({ items }, props) => {
-  return { 
-    item: Object.values(items.items)
-          .map(item => item)
-          .find(item => item.id === parseInt(props.match.params.id, 10))
-  }
-}
+const mapStateToProps = ({ items }, props) => ({
+  item: Object.values(items.items)
+        .map(item => item)
+        .find(item => item.id === parseInt(props.match.params.id, 10))
+})
 
 export default connect(mapStateToProps, { addItem })(ViewItem)
