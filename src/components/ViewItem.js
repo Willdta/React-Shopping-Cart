@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom'
 
 class ViewItem extends Component {
   state = {
-    itemQuantity: 0
+    itemQuantity: 0,
+    quantityRemainingErrorMessage: false,
+    invalidQuantityMessage: false,
+    successMessage: false
   }
 
   onChange = e => {
@@ -15,15 +18,42 @@ class ViewItem extends Component {
   }
 
   addItem = item => {
-    const { itemQuantity } = this.state
+    const { itemQuantity, quantityRemainingErrorMessage } = this.state
+
+    if (itemQuantity > item.remaining) {
+      this.setState({
+        quantityRemainingErrorMessage: true
+      })
+    }
+
+    if (itemQuantity === NaN || itemQuantity === 0 || itemQuantity < 0) {
+      this.setState({
+        invalidQuantityMessage: true
+      })
+    }
 
     if (itemQuantity > 0 && itemQuantity <= item.remaining && itemQuantity !== isNaN && itemQuantity !== 0) {
       this.props.addItem(item, itemQuantity)
+      
+      this.setState({
+        successMessage: true
+      })
     }
   }
 
   render() {
     const { item } = this.props
+    const { quantityRemainingErrorMessage, successMessage, invalidQuantityMessage } = this.state
+
+    if (quantityRemainingErrorMessage || successMessage || invalidQuantityMessage) {
+      setTimeout(() => {
+        this.setState({
+          quantityRemainingErrorMessage: false,
+          invalidQuantityMessage: false,
+          successMessage: false
+        })
+      }, 2000)
+    }
 
     return (
       <div>
@@ -43,6 +73,9 @@ class ViewItem extends Component {
               placeholder="quantity"
             />
             <button onClick={() => this.addItem(item)}>Add To Cart</button>
+            { quantityRemainingErrorMessage ? <h5 style={{ 'color': 'red' }}>Not enough in stock</h5> : null }
+            { invalidQuantityMessage ? <h5 style={{ 'color': 'red' }}>Please add a valid quantity</h5> : null }
+            { successMessage ? <h5 style={{ 'color': 'green' }}>Successfully added</h5> : null }
           </div>
         )}
       </div>
