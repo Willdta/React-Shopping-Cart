@@ -12,7 +12,8 @@ const initialState = {
       id: 1,
       name: 'Yeezys',
       image: 'https://www.sneakermake.com/wp-content/uploads/2017/05/NEW-2017-UA-Adidas-Yeezy-350-V2-Boost-SPLV-Bape-Shark-2-400x400.jpg',
-      price: 50,
+      price: 100,
+      category: 'Shoes',
       remaining: 5,
       initialStock: 5,
       quantity: 0
@@ -22,7 +23,8 @@ const initialState = {
       id: 2,
       name: 'Github Sweater',
       image: 'https://cdn.shopify.com/s/files/1/0262/3477/products/product-image-457055122.jpg?v=1510010749',
-      price: 100,
+      price: 50,
+      category: 'Clothes',
       remaining: 5,
       initialStock: 5,
       quantity: 0
@@ -33,6 +35,18 @@ const initialState = {
       name: 'Protein Powder',
       image: 'https://cdn.hoppingo.com/products/163472/medium/inlife-whey-protein-powder-2-lbs--chocolate-flavour--body-building-supplement----------------------------------------------2lb-.jpg',
       price: 200,
+      category: 'Gym',
+      remaining: 5,
+      initialStock: 5,      
+      quantity: 0
+    },
+
+   4: {
+      id: 4,
+      name: 'Boosts',
+      image: 'https://images.footlocker.com/pi/BB6179/large/adidas-ultra-boost-mens',
+      price: 300,
+      category: 'Shoes',
       remaining: 5,
       initialStock: 5,      
       quantity: 0

@@ -7,7 +7,7 @@ export default class RenderItem extends Component {
 
     return (
       <div key={item.id}>
-        <img src={item.image} style={{ 'height': '200px', 'width': '200px' }}/>
+        <img src={item.image} alt="iamge" style={{ 'height': '200px', 'width': '200px' }}/>
         <h5>{item.name}</h5>
         <h5>${item.price}</h5>
         <h5>Remaining: {item.remaining}</h5>

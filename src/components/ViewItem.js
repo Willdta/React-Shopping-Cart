@@ -18,7 +18,7 @@ class ViewItem extends Component {
   }
 
   addItem = item => {
-    const { itemQuantity, quantityRemainingErrorMessage } = this.state
+    const { itemQuantity } = this.state
 
     if (itemQuantity > item.remaining) {
       this.setState({
@@ -26,7 +26,7 @@ class ViewItem extends Component {
       })
     }
 
-    if (itemQuantity === NaN || itemQuantity === 0 || itemQuantity < 0) {
+    if (itemQuantity === isNaN || itemQuantity === 0 || itemQuantity < 0) {
       this.setState({
         invalidQuantityMessage: true
       })
