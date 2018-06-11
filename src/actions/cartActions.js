@@ -49,12 +49,26 @@ export const removeItem = item  => dispatch => {
   // payload: id
 }
 
-export const incrementCartQuantity = ({ id }, value) => ({
-  type: INCREMENT_CART_QUANTITY,
-  payload: { id, value }
-})
+export const incrementCartQuantity = (item, value) => dispatch => {
+  database.ref(`items/${item.id}`)
+    .update({
+      ...item,
+      remaining: item.remaining - Math.abs(item.quantity - value),
+      quantity: value
+    })
 
-export const decrementCartQuantity = ({ id }, value) => ({
-  type: DECREMENT_CART_QUANTITY,
-  payload: { id, value }
-})
+  // type: INCREMENT_CART_QUANTITY,
+  // payload: { id, value }
+}
+
+export const decrementCartQuantity = (item, value) => dispatch => {
+   database.ref(`items/${item.id}`)
+    .update({
+      ...item,
+      remaining: item.remaining + Math.abs(item.quantity - value),
+      quantity: value
+    })
+ 
+  // type: DECREMENT_CART_QUANTITY,
+  // payload: { id, value }
+}
