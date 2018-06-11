@@ -32,13 +32,19 @@ export const addItem = (item, value) => dispatch => {
   // }
 }
 
-export const removeItem = item  => {
+export const removeItem = item  => dispatch => {
   database.ref(`items/${item.id}`).update({
     ...item,
     remaining: 5,
     quantity: 0
   })
   
+  database.ref('cart/quantity').update({
+    [item.id]: 0
+  })
+  
+  database.ref('cart/ids').remove()
+
   // type: REMOVE_FROM_CART,
   // payload: id
 }
