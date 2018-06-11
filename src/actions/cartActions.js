@@ -46,7 +46,11 @@ export const removeItem = item  => dispatch => {
   database.ref('cart/quantity').update({
     [item.id]: 0
   })
-  
+
+  database
+    .ref('total')
+    .transaction(data => parseInt(data - (item.price * item.quantity), 10))
+
   database.ref('cart/ids').remove()
 
   // type: REMOVE_FROM_CART,
@@ -66,6 +70,10 @@ export const incrementCartQuantity = (item, value) => dispatch => {
       [item.id]: value
     })
 
+  database
+    .ref('total')
+    .transaction(data => parseInt(data + item.price * Math.abs(item.quantity - value), 10))
+
   // type: INCREMENT_CART_QUANTITY,
   // payload: { id, value }
 }
@@ -82,6 +90,10 @@ export const decrementCartQuantity = (item, value) => dispatch => {
     .update({
       [item.id]: value
     })
+
+  database
+    .ref('total')
+    .transaction(data => parseInt(data - item.price * Math.abs(item.quantity - value), 10))
  
   // type: DECREMENT_CART_QUANTITY,
   // payload: { id, value }
