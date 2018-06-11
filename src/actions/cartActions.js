@@ -7,19 +7,19 @@ import {
 
 import { database } from '../firebase'
 
-export const addItem = (item, value) => {
+export const addItem = (item, value) => dispatch => {
   database
     .ref(`items/${item.id}`)
     .update({ 
       ...item, 
       remaining: item.remaining - value, 
-      quantity: item.quantity + value 
+      quantity: item.quantity + value
     })
   
-  return {
-    type: ADD_TO_CART,
-    payload: { item, value }
-  }
+  // return {
+  //   type: ADD_TO_CART,
+  //   payload: { item, value }
+  // }
 }
 
 export const removeItem = ({ id }) => dispatch => ({

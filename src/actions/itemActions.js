@@ -8,10 +8,4 @@ export const renderItems = () => dispatch => {
       payload: snapshot.val()
     })
   })
-  
-
-  // return {
-  //   type: RENDER_ITEMS,
-  //   payload: val
-  // }
 }

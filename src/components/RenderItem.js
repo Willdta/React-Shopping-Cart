@@ -10,8 +10,14 @@ export default class RenderItem extends Component {
         <img src={item.image} alt="iamge" style={{ 'height': '200px', 'width': '200px' }}/>
         <h5>{item.name}</h5>
         <h5>${item.price}</h5>
-        <h5>Remaining: {item.remaining}</h5>
-        <Link to={`/item/${item.id}`}>View Item</Link>
+        {item.remaining === 0 ? (
+          <h5 style={{'color': 'red'}}>Sold Out</h5>
+        ) : (
+          <div>
+            <h5>Remaining: {item.remaining}</h5>
+            <Link to={`/item/${item.id}`}>View Item</Link>
+          </div>
+        )}
       </div>
     )
   }
