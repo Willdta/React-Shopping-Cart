@@ -15,6 +15,16 @@ export const addItem = (item, value) => dispatch => {
       remaining: item.remaining - value, 
       quantity: item.quantity + value
     })
+
+  database
+    .ref('cart/ids')
+    .push(item.id)
+
+  database
+    .ref('cart/quantity')
+    .update({
+      [item.id]: value
+    })
   
   // return {
   //   type: ADD_TO_CART,
@@ -22,10 +32,16 @@ export const addItem = (item, value) => dispatch => {
   // }
 }
 
-export const removeItem = ({ id }) => dispatch => ({
-  type: REMOVE_FROM_CART,
-  payload: id
-})
+export const removeItem = item  => {
+  database.ref(`items/${item.id}`).update({
+    ...item,
+    remaining: 5,
+    quantity: 0
+  })
+  
+  // type: REMOVE_FROM_CART,
+  // payload: id
+}
 
 export const incrementCartQuantity = ({ id }, value) => ({
   type: INCREMENT_CART_QUANTITY,

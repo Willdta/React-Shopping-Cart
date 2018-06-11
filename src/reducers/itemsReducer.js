@@ -1,5 +1,6 @@
 import {
   RENDER_ITEMS,
+  RENDER_CART,
   ADD_TO_CART,
   REMOVE_FROM_CART,
   INCREMENT_CART_QUANTITY,
@@ -53,14 +54,23 @@ const initialState = {
   //   }
   // },
   // total: 0,
-  stuff: null
+  items: null,
+  cart: null
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case RENDER_ITEMS:
-      console.log(action.payload)
-      return { ...state, stuff: action.payload }
+      return { 
+        ...state, 
+        items: action.payload, 
+      }
+    
+    case RENDER_CART:
+      return {
+        ...state,
+        cart: action.payload
+      }
 
     case ADD_TO_CART:
       return { 

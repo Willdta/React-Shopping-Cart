@@ -12,7 +12,7 @@ class ViewItem extends Component {
     successMessage: false
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.props.renderItems()
   }
   
@@ -51,15 +51,15 @@ class ViewItem extends Component {
     const { item } = this.props
     const { quantityRemainingErrorMessage, successMessage, invalidQuantityMessage } = this.state
 
-    if (quantityRemainingErrorMessage || successMessage || invalidQuantityMessage) {
-      setTimeout(() => {
-        this.setState({
-          quantityRemainingErrorMessage: false,
-          invalidQuantityMessage: false,
-          successMessage: false
-        })
-      }, 2000)
-    }
+    // if (quantityRemainingErrorMessage || successMessage || invalidQuantityMessage) {
+    //   setTimeout(() => {
+    //     this.setState({
+    //       quantityRemainingErrorMessage: false,
+    //       invalidQuantityMessage: false,
+    //       successMessage: false
+    //     })
+    //   }, 2000)
+    // }
 
     return (
       <div>
@@ -92,9 +92,9 @@ class ViewItem extends Component {
 }
 
 const mapStateToProps = ({ items }, props) => {
-  if (items.stuff) {
+  if (items.items) {
     return {
-      item: Object.values(items.stuff)
+      item: Object.values(items.items)
             .map(item => item)
             .find(item => item.id === parseInt(props.match.params.id, 10))
     }

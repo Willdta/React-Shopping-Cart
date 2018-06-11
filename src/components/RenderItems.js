@@ -94,7 +94,7 @@ class RenderItems extends Component {
 }
 
 const mapStateToProps = ({ items }) => ({
-  items: items.stuff
+  items: items.items
 })
 
 export default connect(mapStateToProps, { renderItems })(RenderItems)
