@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { renderItems } from '../actions/itemActions'
 import { addItem } from '../actions/cartActions'
 import { Link } from 'react-router-dom'
 
@@ -10,6 +11,11 @@ class ViewItem extends Component {
     invalidQuantityMessage: false,
     successMessage: false
   }
+
+  componentWillMount = () => {
+    this.props.renderItems()
+  }
+  
 
   onChange = e => {
     this.setState({
@@ -59,7 +65,7 @@ class ViewItem extends Component {
       <div>
         <Link to="/">Back</Link>
         <Link to="/cart">View Cart</Link>
-        {item && (
+        {item ? (
           <div>
             <img src={item.image} alt="shoes" />
             <h2>{item.name}</h2>
@@ -77,16 +83,22 @@ class ViewItem extends Component {
             { invalidQuantityMessage ? <h5 style={{ 'color': 'red' }}>Please add a valid quantity</h5> : null }
             { successMessage ? <h5 style={{ 'color': 'green' }}>Successfully added</h5> : null }
           </div>
+        ) : (
+          <h1>Loading...</h1>
         )}
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ items }, props) => ({
-  item: Object.values(items.items)
-        .map(item => item)
-        .find(item => item.id === parseInt(props.match.params.id, 10))
-})
+const mapStateToProps = ({ items }, props) => {
+  if (items.stuff) {
+    return {
+      item: Object.values(items.stuff)
+            .map(item => item)
+            .find(item => item.id === parseInt(props.match.params.id, 10))
+    }
+  }
+}
 
-export default connect(mapStateToProps, { addItem })(ViewItem)
+export default connect(mapStateToProps, { addItem, renderItems })(ViewItem)
