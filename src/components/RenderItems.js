@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { renderItems } from '../actions/itemActions'
 import { Link } from 'react-router-dom'
 import RenderItem from './RenderItem'
+import { database } from '../firebase'
 
 class RenderItems extends Component {
   state = {
