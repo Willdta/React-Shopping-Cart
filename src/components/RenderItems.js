@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { renderItems } from '../actions/itemActions'
 import { Link } from 'react-router-dom'
 import RenderItem from './RenderItem'
-import { database } from '../firebase'
 
 class RenderItems extends Component {
   state = {
@@ -20,40 +19,40 @@ class RenderItems extends Component {
     const { items } = this.props
     const { searchTerm, value, category } = this.state
 
-    let filteredItems = Object.values(items).filter(item => (
-      item.name.toLowerCase().includes(searchTerm.toLowerCase())
-    ))
+      // let filteredItems = Object.values(items).filter(item => (
+      //   item.name.toLowerCase().includes(searchTerm.toLowerCase())
+      // ))
 
-    if (!category && value === 'priceHigh') {
-      filteredItems = filteredItems.sort((a, b) => b.price - a.price)
-    }  
-    
-    if (!category && value === 'priceLow') {
-      filteredItems = filteredItems.sort((a, b) => a.price - b.price)
-    }  
-    
-    if (category && value === 'priceLow') {
-      filteredItems = filteredItems.filter(item => item.category.includes(category)).sort((a, b) => a.price - b.price)
-    }  
-    
-    if (category && value === 'priceHigh') {
-      filteredItems = filteredItems.filter(item => item.category.includes(category)).sort((a, b) => b.price - a.price)
-    } 
-    
-    if (category === 'Shoes' || category === 'Clothes' || category === 'Gym') {
-      filteredItems = filteredItems.filter(item => item.category.includes(category))
-    } 
-    
-    if (category === 'All' && value === 'priceHigh') {
-      filteredItems = Object.values(items).filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => b.price - a.price)
-    }
-    
-    if (category === 'All' && value === 'priceLow') {
-      filteredItems = Object.values(items).filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => a.price - b.price)
-    }
+      // if (!category && value === 'priceHigh') {
+      //   filteredItems = filteredItems.sort((a, b) => b.price - a.price)
+      // }
+
+      // if (!category && value === 'priceLow') {
+      //   filteredItems = filteredItems.sort((a, b) => a.price - b.price)
+      // }
+
+      // if (category && value === 'priceLow') {
+      //   filteredItems = filteredItems.filter(item => item.category.includes(category)).sort((a, b) => a.price - b.price)
+      // }
+
+      // if (category && value === 'priceHigh') {
+      //   filteredItems = filteredItems.filter(item => item.category.includes(category)).sort((a, b) => b.price - a.price)
+      // }
+
+      // if (category === 'Shoes' || category === 'Clothes' || category === 'Gym') {
+      //   filteredItems = filteredItems.filter(item => item.category.includes(category))
+      // }
+
+      // if (category === 'All' && value === 'priceHigh') {
+      //   filteredItems = Object.values(items).filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => b.price - a.price)
+      // }
+
+      // if (category === 'All' && value === 'priceLow') {
+      //   filteredItems = Object.values(items).filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => a.price - b.price)
+      // }
 
     return (
-      items && (
+      items !== null ? (
         <div>
           <h1>Shopping Area</h1>
 
@@ -63,7 +62,7 @@ class RenderItems extends Component {
             onChange={e => this.setState({ searchTerm: e.target.value })} 
           />
 
-          <label>Price</label>
+          {/* <label>Price</label>
           <select value={value} onChange={e => this.setState({ value: e.target.value })}>
             <option style={{ 'display': 'none' }}/>
             <option value="priceHigh">Price (Highest to Lowest)</option>
@@ -77,23 +76,25 @@ class RenderItems extends Component {
             <option value="Shoes">Shoes</option>
             <option value="Clothes">Clothes</option>
             <option value="Gym">Gym Stuff</option>
-          </select>
+          </select> */}
 
           <div style={{ 'display': 'flex' }}>
-            {filteredItems.map(item => (
+            {Object.values(items).filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())).map(item => (
               <RenderItem item={item} key={item.id} />
             ))}
           </div>
 
           <Link to="/cart">View Cart</Link>
         </div>
+      ) : (
+        <h1>Loading...</h1>
       )
     )
   }
 }
 
 const mapStateToProps = ({ items }) => ({
-  items: items.items
+  items: items.stuff
 })
 
 export default connect(mapStateToProps, { renderItems })(RenderItems)

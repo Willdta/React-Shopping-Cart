@@ -5,12 +5,24 @@ import {
   DECREMENT_CART_QUANTITY
 } from './types'
 
-export const addItem = ({ id }, value) => ({    
-  type: ADD_TO_CART,
-  payload: { id, value }
-})
+import { database } from '../firebase'
 
-export const removeItem = ({ id }) => ({
+export const addItem = (item, value) => {
+  database
+    .ref(`items/${item.id}`)
+    .update({ 
+      ...item, 
+      remaining: item.remaining - value, 
+      quantity: item.quantity + value 
+    })
+  
+  return {
+    type: ADD_TO_CART,
+    payload: { item, value }
+  }
+}
+
+export const removeItem = ({ id }) => dispatch => ({
   type: REMOVE_FROM_CART,
   payload: id
 })
