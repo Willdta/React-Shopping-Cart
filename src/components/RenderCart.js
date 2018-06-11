@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { renderItems, renderCart } from '../actions/itemActions'
+import { renderItems, renderCart, renderTotal } from '../actions/itemActions'
 import { Link } from 'react-router-dom'
 import RenderCartItem from './RenderCartItem'
 
@@ -8,6 +8,7 @@ class RenderCart extends Component {
   componentDidMount = () => {
     this.props.renderItems()
     this.props.renderCart()
+    this.props.renderTotal()
   }
   
   renderCart = () => {
@@ -32,9 +33,9 @@ class RenderCart extends Component {
           <h5>No Items in your cart</h5>
         )}
 
-        {total > 0 && (
+        {/* {total > 0 && ( */}
           <h3>Total: ${total}</h3>
-        )}
+        {/* )} */}
       </div>
     )
   }
@@ -42,10 +43,10 @@ class RenderCart extends Component {
   render() { return this.renderCart() }
 }
 
-const mapStateToProps = ({ cart, items }) => ({
+const mapStateToProps = ({ items }) => ({
   cart: items.cart,
   items: items.items, 
   total: items.total
 })
 
-export default connect(mapStateToProps, { renderItems, renderCart })(RenderCart)
+export default connect(mapStateToProps, { renderItems, renderCart, renderTotal })(RenderCart)

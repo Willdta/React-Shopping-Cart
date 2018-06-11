@@ -18,3 +18,12 @@ export const renderCart = () => dispatch => {
     })
   })
 }
+
+export const renderTotal = () => dispatch => {
+  database.ref('total').on('value', snapshot => {
+    dispatch({
+      type: 'RENDER_TOTAL',
+      payload: snapshot.val()
+    })
+  })
+}

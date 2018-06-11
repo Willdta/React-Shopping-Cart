@@ -55,7 +55,8 @@ const initialState = {
   // },
   // total: 0,
   items: null,
-  cart: null
+  cart: null,
+  total: 0
 }
 
 export default (state = initialState, action) => {
@@ -70,6 +71,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         cart: action.payload
+      }
+    
+    case 'RENDER_TOTAL':
+      return {
+        ...state,
+        total: action.payload
       }
 
     case ADD_TO_CART:

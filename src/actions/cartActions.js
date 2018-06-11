@@ -17,6 +17,10 @@ export const addItem = (item, value) => dispatch => {
     })
 
   database
+    .ref('total')
+    .transaction(data => parseInt(data + (item.price * value), 10))
+
+  database
     .ref('cart/ids')
     .push(item.id)
 
@@ -57,16 +61,26 @@ export const incrementCartQuantity = (item, value) => dispatch => {
       quantity: value
     })
 
+  database.ref('cart/quantity')
+    .update({
+      [item.id]: value
+    })
+
   // type: INCREMENT_CART_QUANTITY,
   // payload: { id, value }
 }
 
 export const decrementCartQuantity = (item, value) => dispatch => {
-   database.ref(`items/${item.id}`)
+  database.ref(`items/${item.id}`)
+  .update({
+    ...item,
+    remaining: item.remaining + Math.abs(item.quantity - value),
+    quantity: value
+  })
+
+  database.ref('cart/quantity')
     .update({
-      ...item,
-      remaining: item.remaining + Math.abs(item.quantity - value),
-      quantity: value
+      [item.id]: value
     })
  
   // type: DECREMENT_CART_QUANTITY,

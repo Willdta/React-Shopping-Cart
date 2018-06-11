@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { removeItem, decrementCartQuantity, incrementCartQuantity } from '../actions/cartActions'
+import {  renderItems, renderCart } from '../actions/itemActions'
 
 class RenderCartItem extends Component {
+  componentDidMount = () => {
+    this.props.renderItems()
+    this.props.renderCart()
+  }
+  
   editCartQuantity = (item, e) => {
     const { cart } = this.props
     const { id } = item
@@ -42,4 +48,12 @@ class RenderCartItem extends Component {
   }
 }
 
-export default connect(null, { removeItem, incrementCartQuantity, decrementCartQuantity })(RenderCartItem)
+const mapStateToProps = ({ items }) => {
+  return {
+    items: items.items,
+    cart: items.cart
+  }
+}
+
+
+export default connect(mapStateToProps, { renderItems, renderCart, removeItem, incrementCartQuantity, decrementCartQuantity })(RenderCartItem)
