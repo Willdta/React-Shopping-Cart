@@ -17,7 +17,7 @@ class RenderItems extends Component {
   
   render() {
     const { items } = this.props
-    const { searchTerm, value, category } = this.state
+    const { searchTerm, /*value, /category*/ } = this.state
 
       // let filteredItems = Object.values(items).filter(item => (
       //   item.name.toLowerCase().includes(searchTerm.toLowerCase())

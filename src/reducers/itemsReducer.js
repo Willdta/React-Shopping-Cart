@@ -62,35 +62,26 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case RENDER_ITEMS:
-      return { 
-        ...state, 
-        items: action.payload, 
-      }
+      return { ...state, items: action.payload }
     
     case RENDER_CART:
-      return {
-        ...state,
-        cart: action.payload
-      }
+      return { ...state, cart: action.payload }
     
     case 'RENDER_TOTAL':
-      return {
-        ...state,
-        total: action.payload
-      }
+      return { ...state, total: action.payload }
 
     case ADD_TO_CART:
       return { 
         ...state,
         items: {
           ...state.items, 
-          [action.payload.item.id]: {
-            ...state.items[action.payload.item.id],
-            remaining: state.items[action.payload.item.id].remaining - action.payload.value,
-            quantity: state.items[action.payload.item.id].quantity + action.payload.value
+          [action.payload.id]: {
+            ...state.items[action.payload.id],
+            remaining: state.items[action.payload.id].remaining - action.payload.value,
+            quantity: state.items[action.payload.id].quantity + action.payload.value
           }
         },
-        total: state.total + (state.items[action.payload.item.id].price * action.payload.value)
+        total: state.total + (state.items[action.payload.id].price * action.payload.value)
       }
 
     case REMOVE_FROM_CART:

@@ -10,91 +10,132 @@ import { database } from '../firebase'
 export const addItem = (item, value) => dispatch => {
   database
     .ref(`items/${item.id}`)
-    .update({ 
-      ...item, 
-      remaining: item.remaining - value, 
-      quantity: item.quantity + value
+    .transaction(data => {
+      return data !== null && { 
+        ...data, 
+        remaining: data.remaining - value, 
+        quantity: data.quantity + value 
+      }
     })
-
-  database
-    .ref('total')
-    .transaction(data => parseInt(data + (item.price * value), 10))
-
-  database
-    .ref('cart/ids')
-    .push(item.id)
-
-  database
-    .ref('cart/quantity')
-    .update({
-      [item.id]: value
+    .then(() => {
+      database
+        .ref('total')
+        .transaction(data => parseInt(data + (item.price * value), 10))
     })
-  
-  // return {
-  //   type: ADD_TO_CART,
-  //   payload: { item, value }
-  // }
+    .then(() => {
+      database
+        .ref('cart/ids')
+        .push(item.id)
+    })
+    .then(() => {
+      database
+        .ref('cart/quantity')
+        .update({
+          [item.id]: value
+        })
+    })
+    .then(() => {
+      dispatch({
+        type: ADD_TO_CART,
+        payload: { id: item.id, value }
+      })
+    })
 }
 
 export const removeItem = item  => dispatch => {
-  database.ref(`items/${item.id}`).update({
-    ...item,
-    remaining: 5,
-    quantity: 0
-  })
-  
-  database.ref('cart/quantity').update({
-    [item.id]: 0
-  })
-
   database
-    .ref('total')
-    .transaction(data => parseInt(data - (item.price * item.quantity), 10))
-
-  database.ref('cart/ids').remove()
-
-  // type: REMOVE_FROM_CART,
-  // payload: id
+    .ref('cart/ids')
+    .remove()
+    .then(() => {
+      database
+        .ref('cart/quantity')
+        .transaction(data => {
+          return data !== null && {
+            ...data,
+            [item.id]: 0
+          }
+        })
+    })
+    .then(() => {
+      database
+        .ref(`items/${item.id}`)
+        .transaction(data => {
+          return data !== null && {
+            ...data,
+            remaining: 5,
+            quantity: 0
+          }
+        })
+    })
+    .then(() => {
+      database
+        .ref('total')
+        .transaction(data => parseInt(data - (item.price * item.quantity), 10))
+    })
+    .then(() => {
+      dispatch({
+        type: REMOVE_FROM_CART,
+        payload: item.id
+      })
+    })
 }
 
 export const incrementCartQuantity = (item, value) => dispatch => {
-  database.ref(`items/${item.id}`)
-    .update({
-      ...item,
-      remaining: item.remaining - Math.abs(item.quantity - value),
-      quantity: value
-    })
-
-  database.ref('cart/quantity')
-    .update({
-      [item.id]: value
-    })
-
   database
-    .ref('total')
-    .transaction(data => parseInt(data + item.price * Math.abs(item.quantity - value), 10))
-
-  // type: INCREMENT_CART_QUANTITY,
-  // payload: { id, value }
+    .ref(`items/${item.id}`)
+    .transaction(data => {
+      return data !== null && {
+        ...data,
+        remaining: data.remaining - Math.abs(data.quantity - value),
+        quantity: value
+      }
+    })
+    .then(() => {
+      database
+        .ref('cart/quantity')
+        .update({
+          [item.id]: value
+        })
+    })
+    .then(() => {
+      database
+        .ref('total')
+        .transaction(data => parseInt(data + item.price * Math.abs(item.quantity - value), 10))
+    })
+    .then(() => {
+      dispatch({
+        type: INCREMENT_CART_QUANTITY,
+        payload: { id: item.id, value }
+      })
+    })
 }
 
 export const decrementCartQuantity = (item, value) => dispatch => {
-  database.ref(`items/${item.id}`)
-  .update({
-    ...item,
-    remaining: item.remaining + Math.abs(item.quantity - value),
-    quantity: value
-  })
-
-  database.ref('cart/quantity')
-    .update({
-      [item.id]: value
-    })
-
   database
-    .ref('total')
-    .transaction(data => parseInt(data - item.price * Math.abs(item.quantity - value), 10))
- 
-  // type: DECREMENT_CART_QUANTITY,
-  // payload: { id, value }
+    .ref(`items/${item.id}`)
+    .transaction(data => {
+      return data !== null && {
+        ...data,
+        remaining: data.remaining + Math.abs(data.quantity - value),
+        quantity: value
+      }
+    })
+    .then(() => {
+      database
+        .ref('cart/quantity')
+        .update({
+          [item.id]: value
+        })
+    })
+    .then(() => {
+      database
+        .ref('total')
+        .transaction(data => parseInt(data - item.price * Math.abs(item.quantity - value), 10))
+    })
+    .then(() => {
+      dispatch({
+        type: DECREMENT_CART_QUANTITY,
+        payload: { id: item.id, value }
+      })
+    })
 }

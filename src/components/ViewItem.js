@@ -15,7 +15,6 @@ class ViewItem extends Component {
   componentDidMount = () => {
     this.props.renderItems()
   }
-  
 
   onChange = e => {
     this.setState({
@@ -92,11 +91,12 @@ class ViewItem extends Component {
 }
 
 const mapStateToProps = ({ items }, props) => {
-  if (items.items) {
+  if (items.items !== null) {
     return {
-      item: Object.values(items.items)
-            .map(item => item)
-            .find(item => item.id === parseInt(props.match.params.id, 10))
+      item: Object
+              .values(items.items)
+              .map(item => item)
+              .find(item => item.id === parseInt(props.match.params.id, 10))
     }
   }
 }

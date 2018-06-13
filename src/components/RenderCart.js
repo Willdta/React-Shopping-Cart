@@ -13,12 +13,12 @@ class RenderCart extends Component {
   
   renderCart = () => {
     const { cart, items, total } = this.props
-    
+
     return (
       <div>
         <Link to="/">Back</Link>
         <h1>Cart</h1>
-        {cart !== null && items !== null ? (
+        {items && total > 0 ? (
           <div>
             {Object.keys(items).map(id => (
               <RenderCartItem 
@@ -28,14 +28,11 @@ class RenderCart extends Component {
                 id={id} 
               />
             ))}
+          <h3>Total: ${total}</h3>
           </div>
         ) : (
           <h5>No Items in your cart</h5>
         )}
-
-        {/* {total > 0 && ( */}
-          <h3>Total: ${total}</h3>
-        {/* )} */}
       </div>
     )
   }
@@ -44,9 +41,9 @@ class RenderCart extends Component {
 }
 
 const mapStateToProps = ({ items }) => ({
-  cart: items.cart,
-  items: items.items, 
-  total: items.total
+  total: items.total,
+  items: items.items,
+  cart: items.cart
 })
 
 export default connect(mapStateToProps, { renderItems, renderCart, renderTotal })(RenderCart)
