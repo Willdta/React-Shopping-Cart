@@ -7,12 +7,7 @@ import {
 
 const initialState = {
   ids: [],
-  quantity: {
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0
-  }
+  quantity: {}
 }
 
 export default (state = initialState, action) => {

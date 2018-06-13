@@ -24,15 +24,15 @@ export const addItem = (item, value) => dispatch => {
     })
     .then(() => {
       database
-        .ref('cart/ids')
-        .push(item.id)
+      .ref('cart/quantity')
+      .update({
+        [item.id]: value
+      })
     })
     .then(() => {
       database
-        .ref('cart/quantity')
-        .update({
-          [item.id]: value
-        })
+        .ref('cart/ids')
+        .push(item.id)
     })
     .then(() => {
       dispatch({

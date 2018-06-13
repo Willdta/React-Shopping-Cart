@@ -7,14 +7,20 @@ import { Link } from 'react-router-dom'
 class ViewItem extends Component {
   state = {
     itemQuantity: 0,
-    quantityRemainingErrorMessage: false,
-    invalidQuantityMessage: false,
-    successMessage: false
   }
-
+  
   componentDidMount = () => {
     this.props.renderItems()
   }
+  
+  componentWillUnmount = () => {
+    this.setState({
+      quantityRemainingErrorMessage: false,
+      invalidQuantityMessage: false,
+      successMessage: false
+    })
+  }
+  
 
   onChange = e => {
     this.setState({
@@ -50,15 +56,15 @@ class ViewItem extends Component {
     const { item } = this.props
     const { quantityRemainingErrorMessage, successMessage, invalidQuantityMessage } = this.state
 
-    // if (quantityRemainingErrorMessage || successMessage || invalidQuantityMessage) {
-    //   setTimeout(() => {
-    //     this.setState({
-    //       quantityRemainingErrorMessage: false,
-    //       invalidQuantityMessage: false,
-    //       successMessage: false
-    //     })
-    //   }, 2000)
-    // }
+    if (quantityRemainingErrorMessage || successMessage || invalidQuantityMessage) {
+      setTimeout(() => {
+        this.setState({
+          quantityRemainingErrorMessage: false,
+          invalidQuantityMessage: false,
+          successMessage: false
+        })
+      }, 2000)
+    }
 
     return (
       <div>
@@ -91,14 +97,14 @@ class ViewItem extends Component {
 }
 
 const mapStateToProps = ({ items }, props) => {
-  if (items.items !== null) {
-    return {
-      item: Object
-              .values(items.items)
+    return items.items !== null ? (
+      { item: Object.values(items.items)
               .map(item => item)
               .find(item => item.id === parseInt(props.match.params.id, 10))
-    }
-  }
+      }
+    ) : (
+      { item: null }
+    )
 }
 
 export default connect(mapStateToProps, { addItem, renderItems })(ViewItem)
