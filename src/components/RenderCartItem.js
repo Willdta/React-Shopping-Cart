@@ -12,7 +12,7 @@ class RenderCartItem extends Component {
       e.preventDefault()
     } else if (value > cart.quantity[id]) {
       this.props.incrementCartQuantity(item, parseInt(value, 10))
-    } else  {
+    } else {
       this.props.decrementCartQuantity(item, parseInt(value, 10))
     }
   }

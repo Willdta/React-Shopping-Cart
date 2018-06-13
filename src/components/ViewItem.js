@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { renderItems } from '../actions/itemActions'
 import { addItem } from '../actions/cartActions'
-import { Link } from 'react-router-dom'
+import Navbar from './Navbar'
+import '../css/itemStyling.css'
 
 class ViewItem extends Component {
   state = {
@@ -21,7 +22,6 @@ class ViewItem extends Component {
     })
   }
   
-
   onChange = e => {
     this.setState({
       itemQuantity: parseInt(e.target.value, 10)
@@ -68,8 +68,7 @@ class ViewItem extends Component {
 
     return (
       <div>
-        <Link to="/">Back</Link>
-        <Link to="/cart">View Cart</Link>
+        <Navbar />
         {item ? (
           <div>
             <img src={item.image} alt="shoes" />

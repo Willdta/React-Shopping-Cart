@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { renderItems } from '../actions/itemActions'
-import { Link } from 'react-router-dom'
 import RenderItem from './RenderItem'
+import Navbar from './Navbar'
+import '../css/itemStyling.css'
 
 class RenderItems extends Component {
   state = {
@@ -48,19 +49,18 @@ class RenderItems extends Component {
       // }
 
       // if (category === 'All' && value === 'priceLow') {
-      //   filteredItems = Object.values(items).filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => a.price - b.price)
-      // }
-
-    return (
-      items !== null ? (
-        <div>
-          <h1>Shopping Area</h1>
-
-          <input 
-            type="text" 
-            placeholder="Search" 
-            onChange={e => this.setState({ searchTerm: e.target.value })} 
-          />
+        //   filteredItems = Object.values(items).filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())).sort((a, b) => a.price - b.price)
+        // }
+        
+        return (
+          items !== null ? (
+            <div>
+                {/* <input 
+                  type="text" 
+                  placeholder="Search" 
+                  onChange={e => this.setState({ searchTerm: e.target.value })} 
+                /> */}
+                <Navbar />
 
           {/* <label>Price</label>
           <select value={value} onChange={e => this.setState({ value: e.target.value })}>
@@ -78,13 +78,12 @@ class RenderItems extends Component {
             <option value="Gym">Gym Stuff</option>
           </select> */}
 
-          <div style={{ 'display': 'flex' }}>
+          <div className="items-container">
             {Object.values(items).filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())).map(item => (
               <RenderItem item={item} key={item.id} />
             ))}
           </div>
 
-          <Link to="/cart">View Cart</Link>
         </div>
       ) : (
         <h1>Loading...</h1>
