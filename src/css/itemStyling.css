@@ -31,3 +31,25 @@
 .item-container h5 {
   font-weight: 500;
 }
+
+.item-container img {
+  height: 200px;
+  width: 200px;
+}
+
+.item-container input {
+  height: 30px;
+  width: 100px;
+  margin: 20px 0;
+}
+
+.item-container button {
+  margin-top: 20px;
+  height: 30px;
+  width: 100px;
+  background: red;
+  border-radius: 25px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

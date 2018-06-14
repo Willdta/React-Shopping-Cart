@@ -12,7 +12,7 @@ class RenderCartItem extends Component {
       e.preventDefault()
     } else if (value > cart.quantity[id]) {
       this.props.incrementCartQuantity(item, parseInt(value, 10))
-    } else {
+    } else if (value < cart.quantity[id]) {
       this.props.decrementCartQuantity(item, parseInt(value, 10))
     }
   }
@@ -22,9 +22,9 @@ class RenderCartItem extends Component {
 
     return (
       items[id].quantity > 0 && (
-        <div key={id}>
+        <div key={id} className="item-container">
           <img src={items[id].image} alt="shoes" />
-          <h5>{items[id].name}</h5>
+          <h4>{items[id].name}</h4>
           <h5>Total Item Price: ${items[id].price * items[id].quantity}</h5>
           <input 
             type="number"
@@ -35,7 +35,7 @@ class RenderCartItem extends Component {
             onBlur={e => this.editCartQuantity(items[id], e)}
           />
           <h5>Quantity: {items[id].quantity}</h5>
-          <button onClick={() => this.props.removeItem(items[id])}>Remove From Cart</button>
+          <button onClick={() => this.props.removeItem(items[id])}>Remove</button>
         </div>
       )
     )

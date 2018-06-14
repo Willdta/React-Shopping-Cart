@@ -11,7 +11,7 @@ export const renderItems = () => dispatch => {
 }
 
 export const renderCart = () => dispatch => {
-  database.ref('cart').once('value', snapshot => {
+  database.ref('cart').on('value', snapshot => {
     dispatch({
       type: RENDER_CART,
       payload: snapshot.val()

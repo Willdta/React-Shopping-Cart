@@ -25,8 +25,11 @@ export const addItem = (item, value) => dispatch => {
     .then(() => {
       database
       .ref('cart/quantity')
-      .update({
-        [item.id]: value
+      .transaction(data => {
+        return data !== null && {
+          ...data,
+          [item.id]: value
+        }
       })
     })
     .then(() => {
@@ -93,8 +96,11 @@ export const incrementCartQuantity = (item, value) => dispatch => {
     .then(() => {
       database
         .ref('cart/quantity')
-        .update({
-          [item.id]: value
+        .transaction(data => {
+          return data !== null && {
+            ...data,
+            [item.id]: value
+          }
         })
     })
     .then(() => {
@@ -123,8 +129,11 @@ export const decrementCartQuantity = (item, value) => dispatch => {
     .then(() => {
       database
         .ref('cart/quantity')
-        .update({
-          [item.id]: value
+        .transaction(data => {
+          return data !== null && {
+            ...data,
+            [item.id]: value
+          }
         })
     })
     .then(() => {

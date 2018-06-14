@@ -9,7 +9,7 @@ export default () => {
         <h1>React E-Commerce</h1>
       </Link>
       <Link className="cart-link" to="/cart">
-        <i class="fas fa-shopping-cart fa-lg"></i>
+        <i className="fas fa-shopping-cart fa-lg"></i>
       </Link>
     </div>
   )

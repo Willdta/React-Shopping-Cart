@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { renderItems, renderCart, renderTotal } from '../actions/itemActions'
-import { Link } from 'react-router-dom'
 import RenderCartItem from './RenderCartItem'
+import Navbar from './Navbar'
 
 class RenderCart extends Component {
   componentDidMount = () => {
@@ -16,10 +16,13 @@ class RenderCart extends Component {
 
     return (
       <div>
-        <Link to="/">Back</Link>
-        <h1>Cart</h1>
+        <Navbar />
+        <h1 style={{ 'marginTop': '80px' }}>Cart</h1>
+        {total > 0 && (
+          <h3>Total: ${ total }</h3>
+        )}
         {items && total > 0 ? (
-          <div>
+          <div className="items-container">
             {Object.keys(items).map(id => (
               <RenderCartItem 
                 key={id} 
@@ -28,7 +31,6 @@ class RenderCart extends Component {
                 id={id} 
               />
             ))}
-          <h3>Total: ${total}</h3>
           </div>
         ) : (
           <h5>No Items in your cart</h5>

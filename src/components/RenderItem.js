@@ -9,7 +9,7 @@ export default class RenderItem extends Component {
     return (
       <div key={item.id} className="item-container">
         <Link to={`/item/${item.id}`}>
-          <img src={item.image} alt="iamge" style={{ 'height': '200px', 'width': '200px' }}/>
+          <img src={item.image} alt="iamge" />
         </Link>
         <h4>{item.name}</h4>
         <h5>${item.price}</h5>
