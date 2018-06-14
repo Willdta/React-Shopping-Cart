@@ -8,20 +8,12 @@ import '../css/singleItemStyling.css'
 
 class ViewItem extends Component {
   state = {
-    itemQuantity: 0,
+    itemQuantity: 0
   }
   
   componentDidMount = () => {
     this.props.renderItems()
   }
-  
-  // componentWillUnmount = () => {
-  //   this.setState({
-  //     quantityRemainingErrorMessage: false,
-  //     invalidQuantityMessage: false,
-  //     successMessage: false
-  //   })
-  // }
   
   onChange = e => {
     this.setState({
@@ -53,19 +45,31 @@ class ViewItem extends Component {
     }
   }
 
+  increment = () => {
+    this.setState({
+      itemQuantity: this.state.itemQuantity + 1
+    })
+  }
+
+  decrement = () => {
+    this.setState({
+      itemQuantity: this.state.itemQuantity - 1
+    })
+  }
+
   render() {
     const { item } = this.props
-    const { quantityRemainingErrorMessage, successMessage, invalidQuantityMessage } = this.state
+    const { quantityRemainingErrorMessage, successMessage, invalidQuantityMessage, itemQuantity } = this.state
 
-    // if (quantityRemainingErrorMessage || successMessage || invalidQuantityMessage) {
-    //   setTimeout(() => {
-    //     this.setState({
-    //       quantityRemainingErrorMessage: false,
-    //       invalidQuantityMessage: false,
-    //       successMessage: false
-    //     })
-    //   }, 2000)
-    // }
+    if (quantityRemainingErrorMessage || successMessage || invalidQuantityMessage) {
+      setTimeout(() => {
+        this.setState({
+          quantityRemainingErrorMessage: false,
+          invalidQuantityMessage: false,
+          successMessage: false
+        })
+      }, 2000)
+    }
 
     return (
       <div>
@@ -80,14 +84,18 @@ class ViewItem extends Component {
                 <h2>{item.name}</h2>
                 <h5>Price: ${item.price}</h5>
                 {/* <h5>Remaining: {item.remaining}</h5> */}
-                <input 
-                  type="number"
-                  min={1}
-                  max={5}
-                  onChange={e => this.onChange(e)}  
-                  placeholder="quantity"
-                  className="center"
-                />
+                <div className="input-container">
+                  <div className="plus" onClick={() => this.increment()}>+</div>
+                  <input 
+                    type="number"
+                    min={1}
+                    max={5}
+                    onChange={ e => this.onChange(e) }
+                    value={ itemQuantity }  
+                    placeholder="quantity"
+                  />
+                  <div className="minus" onClick={() => this.decrement()}>-</div>
+                </div>
                 <button 
                   className="center"
                   onClick={() => this.addItem(item)}>
@@ -95,13 +103,13 @@ class ViewItem extends Component {
                 </button>
               </div>
             </div>
-            { quantityRemainingErrorMessage ? <h5 style={{ 'color': 'red' }}>Not enough in stock</h5> : null }
-            { invalidQuantityMessage ? <h5 style={{ 'color': 'red' }}>Please add a valid quantity</h5> : null }
-            { successMessage ? <h5 style={{ 'color': 'green' }}>Successfully added</h5> : null }
           </div>
         ) : (
           <h1>Loading...</h1>
         )}
+        { quantityRemainingErrorMessage ? <h5 style={{ 'color': 'red' }}>Not enough in stock</h5> : null }
+        { invalidQuantityMessage ? <h5 style={{ 'color': 'red' }}>Please add a valid quantity</h5> : null }
+        { successMessage ? <h5 style={{ 'color': 'green' }}>Successfully added</h5> : null }
       </div>
     )
   }

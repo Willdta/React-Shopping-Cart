@@ -16,39 +16,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  /* background: red; */
 }
 
 .single-item-info-child {
   display: flex;
   flex-direction: column;
-  /* background: green; */
   margin-left: 50px;
 }
 
 .single-item-info h5 {
   margin: 50px 0;
 }
-
-.center {
-  /* position: relative;
-  left: 50%;
-  transform: translateX(-50%); */
-}
-
-.single-item-info input {
-  margin-bottom: 50px;
-  width: 200px;
-  height: 50px;
-  border: 1px solid black;
-  background: none;
-}
-
+  
 .single-item-info button {
   background: none;
-  margin-bottom: 50px;
+  margin: 50px 0;
   width: 200px;
   height: 50px;
   border-radius: 25px;
-  border: 1px solid black;
+  border: 1px solid #dfe4ea;
+  cursor: pointer;
 }
