@@ -61,15 +61,15 @@ class ViewItem extends Component {
     const { item } = this.props
     const { quantityRemainingErrorMessage, successMessage, invalidQuantityMessage, itemQuantity } = this.state
 
-    if (quantityRemainingErrorMessage || successMessage || invalidQuantityMessage) {
-      setTimeout(() => {
-        this.setState({
-          quantityRemainingErrorMessage: false,
-          invalidQuantityMessage: false,
-          successMessage: false
-        })
-      }, 2000)
-    }
+    // if (quantityRemainingErrorMessage || successMessage || invalidQuantityMessage) {
+    //   setTimeout(() => {
+    //     this.setState({
+    //       quantityRemainingErrorMessage: false,
+    //       invalidQuantityMessage: false,
+    //       successMessage: false
+    //     })
+    //   }, 2000)
+    // }
 
     return (
       <div>
@@ -82,10 +82,10 @@ class ViewItem extends Component {
             <div className="single-item-info">
               <div className="single-item-info-child">
                 <h2>{item.name}</h2>
-                <h5>Price: ${item.price}</h5>
-                {/* <h5>Remaining: {item.remaining}</h5> */}
+                <h3>Price: ${item.price}</h3>
+                <h4>{item.description}</h4>
                 <div className="input-container">
-                  <div className="plus" onClick={() => this.increment()}>+</div>
+                  <div className="plus quantity-button" onClick={() => this.increment()}>+</div>
                   <input 
                     type="number"
                     min={1}
@@ -94,7 +94,7 @@ class ViewItem extends Component {
                     value={ itemQuantity }  
                     placeholder="quantity"
                   />
-                  <div className="minus" onClick={() => this.decrement()}>-</div>
+                  <div className="minus quantity-button" onClick={() => this.decrement()}>-</div>
                 </div>
                 <button 
                   className="center"
@@ -107,9 +107,9 @@ class ViewItem extends Component {
         ) : (
           <h1>Loading...</h1>
         )}
-        { quantityRemainingErrorMessage ? <h5 style={{ 'color': 'red' }}>Not enough in stock</h5> : null }
-        { invalidQuantityMessage ? <h5 style={{ 'color': 'red' }}>Please add a valid quantity</h5> : null }
-        { successMessage ? <h5 style={{ 'color': 'green' }}>Successfully added</h5> : null }
+        { quantityRemainingErrorMessage ? <h5 className="error-message">Not enough in stock</h5> : null }
+        { invalidQuantityMessage ? <h5 className="error-message">Please add a valid quantity</h5> : null }
+        { successMessage ? <h5 className="success-message">Successfully added</h5> : null }
       </div>
     )
   }

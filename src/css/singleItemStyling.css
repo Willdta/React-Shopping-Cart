@@ -10,6 +10,11 @@
   margin-right: 50px;
 }
 
+.single-item-image img {
+  height: 400px;
+  width: 400px;
+}
+
 .single-item-info {
   display: flex;
   flex: 1;
@@ -22,18 +27,47 @@
   display: flex;
   flex-direction: column;
   margin-left: 50px;
+  width: 400px;
 }
 
-.single-item-info h5 {
-  margin: 50px 0;
+.single-item-info h3 {
+  margin: 50px 0; 
 }
-  
+
+.single-item-info h4 {
+  margin-bottom: 50px; 
+}
+
 .single-item-info button {
   background: none;
   margin: 50px 0;
   width: 200px;
   height: 50px;
-  border-radius: 25px;
   border: 1px solid #dfe4ea;
   cursor: pointer;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.error-message {
+  background: #ff7675;
+  padding: 20px;
+  color: white;
+  margin-top: 30px;
+  width: 250px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.success-message {
+  background: #00b894;
+  padding: 20px;
+  color: white;
+  margin-top: 30px;
+  width: 250px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }

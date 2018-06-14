@@ -6,6 +6,7 @@
   text-decoration: none;
   box-sizing: border-box;
   font-family: 'quicksand';
+  font-weight: 400;
 }
 
 .items-container {
@@ -25,11 +26,6 @@
 
 .item-container h4 {
   margin: 20px 0;
-  font-weight: 400;
-}
-
-.item-container h5 {
-  font-weight: 400;
 }
 
 .item-container img {
@@ -47,28 +43,24 @@
   height: 40px;
   grid-column: 2/3;
   margin: 0 10px;
-  border: 0.1px solid #dfe4ea;
+  border: 1px solid #dfe4ea;
   padding: 5px;
 }
 
 .plus {
   grid-column: 1/2;
+}
+
+.quantity-button {
   display: flex;
   justify-content: center;
   align-items: center;
   border: 0.1px solid #dfe4ea;
   cursor: pointer;
-  /* color: #dfe4ea */
 }
 
 .minus {
   grid-column: 3/4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 0.1px solid #dfe4ea;
-  cursor: pointer;
-  /* color: #dfe4ea */
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -77,16 +69,19 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-.item-container button {
+.item-container > .button {
   height: 30px;
   width: 100px;
-  background: red;
-  border-radius: 25px;
-  color: white;
-  border: none;
+  border: 1px solid #dfe4ea;
+  background: none;
+  color: black;
   cursor: pointer;
 }
 
+.item-container > .edit-button {
+  margin-left: 20px;
+}
+
 .item-container h5 {
-  margin: 20px;;
+  margin: 20px;
 }
