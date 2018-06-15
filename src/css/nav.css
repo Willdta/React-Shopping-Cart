@@ -10,6 +10,7 @@
   align-items: center;
   padding-left: 30px;
   color: black;
+  font-size: 10px;
 }
 
 .nav input {
@@ -22,6 +23,14 @@
   padding-left: 10px;
   border-radius: 20px;
   border: 1px solid black;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }
 
 .nav input:focus {

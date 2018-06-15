@@ -15,11 +15,11 @@ class RenderCart extends Component {
     const { cart, items, total } = this.props
 
     return (
-      <div>
+      <div className="cart-container">
         <Navbar />
         <h1 style={{ 'marginTop': '80px' }}>Cart</h1>
         {total > 0 && (
-          <h3>Total: ${ total }</h3>
+          <h3 className="cart-text">Total: ${ total }</h3>
         )}
         {items && total > 0 ? (
           <div className="items-container">
@@ -33,7 +33,7 @@ class RenderCart extends Component {
             ))}
           </div>
         ) : (
-          <h5>No Items in your cart</h5>
+          <h3>No Items in your cart</h3>
         )}
       </div>
     )

@@ -9,6 +9,13 @@
   font-weight: 400;
 }
 
+.search-input {
+  padding: 10px;
+  margin-top: 40px;
+  border: 1px solid #dfe4ea;
+  width: 250px;
+}
+
 .items-container {
   display: flex;
   justify-content: center;
@@ -19,7 +26,7 @@
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
   background: white;
   margin: 0 10px;
-  margin-top: 100px;
+  margin-top: 40px;
   padding: 20px;
   width: 350px;
 }
@@ -84,4 +91,18 @@ input[type=number]::-webkit-outer-spin-button {
 
 .item-container h5 {
   margin: 20px;
+}
+
+.cart-container > h3 {
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 450px) {
+  .item-container {
+    width: 255px;
+  }
+  
+  .item-container > .edit-button {
+    margin-left: 15px;
+  }
 }

@@ -8,7 +8,10 @@ import '../css/singleItemStyling.css'
 
 class ViewItem extends Component {
   state = {
-    itemQuantity: 0
+    itemQuantity: 0,
+    quantityErrorMessage: false,
+    successMessage: false,
+    invalidQuantityMessage: false
   }
   
   componentDidMount = () => {
@@ -26,7 +29,7 @@ class ViewItem extends Component {
 
     if (itemQuantity > item.remaining) {
       this.setState({
-        quantityRemainingErrorMessage: true
+        quantityErrorMessage: true
       })
     }
 
@@ -59,17 +62,17 @@ class ViewItem extends Component {
 
   render() {
     const { item } = this.props
-    const { quantityRemainingErrorMessage, successMessage, invalidQuantityMessage, itemQuantity } = this.state
+    const { quantityErrorMessage, successMessage, invalidQuantityMessage, itemQuantity } = this.state
 
-    // if (quantityRemainingErrorMessage || successMessage || invalidQuantityMessage) {
-    //   setTimeout(() => {
-    //     this.setState({
-    //       quantityRemainingErrorMessage: false,
-    //       invalidQuantityMessage: false,
-    //       successMessage: false
-    //     })
-    //   }, 2000)
-    // }
+    if (quantityErrorMessage || successMessage || invalidQuantityMessage) {
+      setTimeout(() => {
+        this.setState({
+          quantityErrorMessage: false,
+          invalidQuantityMessage: false,
+          successMessage: false
+        })
+      }, 2000)
+    }
 
     return (
       <div>
@@ -107,9 +110,9 @@ class ViewItem extends Component {
         ) : (
           <h1>Loading...</h1>
         )}
-        { quantityRemainingErrorMessage ? <h5 className="error-message">Not enough in stock</h5> : null }
-        { invalidQuantityMessage ? <h5 className="error-message">Please add a valid quantity</h5> : null }
-        { successMessage ? <h5 className="success-message">Successfully added</h5> : null }
+        { quantityErrorMessage ? <h5 className="error-message message">Not enough in stock</h5> : null }
+        { invalidQuantityMessage ? <h5 className="error-message message">Please add a valid quantity</h5> : null }
+        { successMessage ? <h5 className="success-message message">Successfully added</h5> : null }
       </div>
     )
   }

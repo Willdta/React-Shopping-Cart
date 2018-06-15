@@ -71,10 +71,8 @@ class RenderCartItem extends Component {
             <button className="edit-button button" onClick={() => this.value.focus()}>Edit</button>
           </div>
 
-          { quantityErrorMessage ? <h5 className="error-message">Not enough in stock</h5> : null }
-          { invalidQuantityMessage ? <h5 className="error-message">Please add a valid quantity</h5> : null }
-          {/* { successMessage ? <h5 className="success-message">Successfully added</h5> : null } */}
-
+          { quantityErrorMessage ? <h5 className="error-message message">Not enough in stock</h5> : null }
+          { invalidQuantityMessage ? <h5 className="error-message message">Please add a valid quantity</h5> : null }
         </div>
       )
     )
