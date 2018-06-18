@@ -108,7 +108,7 @@ class ViewItem extends Component {
             </div>
           </div>
         ) : (
-          <h1>Loading...</h1>
+          <h1 className="loader">Loading...</h1>
         )}
         { quantityErrorMessage ? <h5 className="error-message message">Not enough in stock</h5> : null }
         { invalidQuantityMessage ? <h5 className="error-message message">Please add a valid quantity</h5> : null }

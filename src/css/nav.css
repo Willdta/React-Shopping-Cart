@@ -1,6 +1,6 @@
 .nav {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 10fr 1fr 1fr;
   height: 80px;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
 }
@@ -43,4 +43,33 @@
   align-items: center;
   justify-content: flex-end;
   padding-right: 30px;
+}
+
+.logout-button {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+}
+
+.auth-button {
+  height: 40px;
+  width: 100px;
+  background: none;
+  border: 1px solid #dfe4ea;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+  .home-link {
+    font-size: 7px;
+    padding-left: 10px;
+  }
+
+  .logout-button {
+    width: 70px;
+  }
 }

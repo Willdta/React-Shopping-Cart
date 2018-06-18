@@ -9,6 +9,29 @@
   font-weight: 400;
 }
 
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.login-button {
+  margin-top: 20px;
+}
+
 .search-input {
   padding: 10px;
   margin-top: 40px;
@@ -104,5 +127,9 @@ input[type=number]::-webkit-outer-spin-button {
   
   .item-container > .edit-button {
     margin-left: 15px;
+  }
+
+  .login-container h1 {
+    font-size: 25px;
   }
 }

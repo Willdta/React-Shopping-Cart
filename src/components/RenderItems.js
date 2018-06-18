@@ -7,9 +7,7 @@ import '../css/itemStyling.css'
 
 class RenderItems extends Component {
   state = {
-    searchTerm: '',
-    value: '',
-    category: ''
+    searchTerm: ''
   }
   
   componentDidMount = () => {
@@ -37,7 +35,7 @@ class RenderItems extends Component {
           </div>
         </div>
       ) : (
-        <h1>Loading...</h1>
+        <h1 className="loader">Loading...</h1>
       )
     )
   }
