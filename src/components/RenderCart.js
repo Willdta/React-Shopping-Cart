@@ -26,7 +26,7 @@ class RenderCart extends Component {
               <RenderCartItem 
                 key={item.id} 
                 item={item}
-                // id={item.id}
+                cart={cart}
                 index={item.key}
               />
             ))}

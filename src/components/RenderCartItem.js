@@ -15,9 +15,9 @@ class RenderCartItem extends Component {
 
   editCartQuantity = (item, e) => {
     const { cart } = this.props
-    const { id } = item
     const { value } = e.target
-    
+    const i = cart.findIndex(x => x.id === item.id)    
+
     if (parseInt(value, 10) === 0 || value === '' || value < 0) {
       e.preventDefault()
       this.setState({
@@ -28,16 +28,19 @@ class RenderCartItem extends Component {
       this.setState({
         quantityErrorMessage: true,
       })
-    } else if (value > cart.quantity[id]) {
-      this.props.incrementCartQuantity(item, parseInt(value, 10))
-    } else if (value < cart.quantity[id]) {
-      this.props.decrementCartQuantity(item, parseInt(value, 10))
+    } else if (value > item.quantity) {
+      this.props.incrementCartQuantity(item, i, parseInt(value, 10))
+    } else if (value < item.quantity) {
+      this.props.decrementCartQuantity(item, i, parseInt(value, 10))
     }
   }
 
   render() {
     const { item, index } = this.props
     const { invalidQuantityMessage, quantityErrorMessage } = this.state
+
+    console.log(this.props.cart);
+    
 
     if (invalidQuantityMessage || quantityErrorMessage) {
       setTimeout(() => {
