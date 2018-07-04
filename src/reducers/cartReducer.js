@@ -1,5 +1,7 @@
 import {
   ADD_TO_CART,
+  RENDER_CART,
+  RENDER_TOTAL,
   REMOVE_FROM_CART,
   INCREMENT_CART_QUANTITY,
   DECREMENT_CART_QUANTITY
@@ -12,6 +14,16 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case RENDER_CART:
+      return { ...state,
+        cart: action.payload
+      }
+
+    case RENDER_TOTAL:
+      return { ...state,
+        total: action.payload
+      }
+
     case ADD_TO_CART:
       return {
         ...state,

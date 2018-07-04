@@ -37,11 +37,11 @@ export default (state = initialState, action) => {
     // case RENDER_ITEMS:
     //   return { ...state, items: action.payload }
     
-    case RENDER_CART:
-      return { ...state, cart: action.payload }
+    // case RENDER_CART:
+    //   return { ...state, cart: action.payload }
     
-    case 'RENDER_TOTAL':
-      return { ...state, total: action.payload }
+    // case 'RENDER_TOTAL':
+    //   return { ...state, total: action.payload }
 
     // case ADD_TO_CART:
       // return { 

@@ -27,7 +27,7 @@ export const addItem = (item, value) => (dispatch, getState) => {
 
       database
         .ref(`users/${uid}/cart`)
-        .push(item)
+        .push({ ...item, quantity: value })
 
 
 

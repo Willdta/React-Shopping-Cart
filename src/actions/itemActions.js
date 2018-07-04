@@ -1,4 +1,4 @@
-import { RENDER_ITEMS, RENDER_CART } from './types'
+import { RENDER_ITEMS, RENDER_CART, RENDER_TOTAL } from './types'
 import { database } from '../firebase'
 
 export const renderItems = () => dispatch => {
@@ -26,7 +26,7 @@ export const renderTotal = () => (dispatch, getState) => {
 
   database.ref(`users/${uid}/total`).once('value', snapshot => {
     dispatch({
-      type: 'RENDER_TOTAL',
+      type: RENDER_TOTAL,
       payload: snapshot.val()
     })
   })

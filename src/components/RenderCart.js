@@ -12,7 +12,7 @@ class RenderCart extends Component {
   }
   
   renderCart = () => {
-    const { cart, items, total } = this.props
+    const { cart, total } = this.props
 
     return (
       <div className="cart-container">
@@ -23,12 +23,10 @@ class RenderCart extends Component {
         )}
         {cart && total > 0 ? (
           <div className="items-container">
-            {cart.map(item => (
+            {Object.values(cart).map(item => (
               <RenderCartItem 
                 key={item.id} 
                 item={item}
-                // cart={cart} 
-                // items={items} 
                 id={item.id} 
               />
               ))
