@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addItem } from '../actions/cartActions'
+import { addItem, addQuantity } from '../actions/cartActions'
+import { renderCart } from '../actions/itemActions'
 import Navbar from './Navbar'
 import '../css/itemStyling.css'
 import '../css/singleItemStyling.css'
@@ -13,6 +14,10 @@ class ViewItem extends Component {
     invalidQuantityMessage: false
   }
   
+  componentDidMount = () => {
+    this.props.renderCart()
+  }
+  
   onChange = e => {
     this.setState({
       itemQuantity: parseInt(e.target.value, 10)
@@ -21,6 +26,8 @@ class ViewItem extends Component {
 
   addItem = item => {
     const { itemQuantity } = this.state
+    const { cart } = this.props
+    const i = cart.findIndex(x => x.id === item.id)
 
     if (itemQuantity > item.remaining) {
       this.setState({
@@ -34,12 +41,16 @@ class ViewItem extends Component {
       })
     }
 
-    if (itemQuantity > 0 && itemQuantity <= item.remaining && itemQuantity !== isNaN && itemQuantity !== 0) {
+    if (!cart.some(x => x.id === item.id) && itemQuantity > 0 && itemQuantity <= item.remaining && itemQuantity !== isNaN && itemQuantity !== 0) {
       this.props.addItem(item, itemQuantity)
       
       this.setState({
         successMessage: true
       })
+    }
+
+    if (cart.some(x => x.id === item.id)) {
+      this.props.addQuantity(i, itemQuantity, cart[i]) 
     }
   }
 
@@ -59,6 +70,8 @@ class ViewItem extends Component {
     const { item } = this.props
     const { quantityErrorMessage, successMessage, invalidQuantityMessage, itemQuantity } = this.state
 
+    const filteredItem = item.map(item => item).find(item => item.id === parseInt(this.props.match.params.id, 10))
+
     // if (quantityErrorMessage || successMessage || invalidQuantityMessage) {
     //   setTimeout(() => {
     //     this.setState({
@@ -72,16 +85,16 @@ class ViewItem extends Component {
     return (
       <div>
         <Navbar />
-        {item ? (
+        {filteredItem ? (
           <div className="single-item-container">
             <div className="single-item-image">
-              <img src={item.image} alt="shoes" />
+              <img src={filteredItem.image} alt="shoes" />
             </div>
             <div className="single-item-info">
               <div className="single-item-info-child">
-                <h2>{item.name}</h2>
-                <h3>Price: ${item.price}</h3>
-                <h4>{item.description}</h4>
+                <h2>{filteredItem.name}</h2>
+                <h3>Price: ${filteredItem.price}</h3>
+                <h4>{filteredItem.description}</h4>
                 <div className="input-container">
                   <div className="plus quantity-button" onClick={() => this.increment()}>+</div>
                   <input 
@@ -96,7 +109,7 @@ class ViewItem extends Component {
                 </div>
                 <button 
                   className="center"
-                  onClick={() => this.addItem(item)}>
+                  onClick={() => this.addItem(filteredItem)}>
                   Add To Cart
                 </button>
               </div>
@@ -113,14 +126,18 @@ class ViewItem extends Component {
   }
 }
 
-const mapStateToProps = ({ items }, props) => {
-    return items.items !== null ? (
-      { item: items.items
-              .map(item => item)
-              .find(item => item.id === parseInt(props.match.params.id, 10))
-      }) : (
-      { item: null }
-    )
+const mapStateToProps = ({ items, cart }, props) => {
+    // return items.items !== null ? (
+    //   { item: items.items
+    //           .map(item => item)
+    //           .find(item => item.id === parseInt(props.match.params.id, 10))
+    //   }) : (
+    //   { item: null }
+    // )
+    return {
+      cart: cart.cart,
+      item: items.items
+    }
 }
 
-export default connect(mapStateToProps, { addItem })(ViewItem)
+export default connect(mapStateToProps, { renderCart, addItem, addQuantity })(ViewItem)

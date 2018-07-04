@@ -36,10 +36,20 @@ export default (state = initialState, action) => {
         total: state.total + (action.payload.price * action.payload.value)
       }
 
+    case 'ADD_QUANTITY':
+      const { i, value } = action.payload
+
+      return {
+        ...state,
+        cart: [
+          ...state.cart.slice(0, i),
+          { ...state.cart[i], quantity: state.cart[i].quantity + value },
+          ...state.cart.slice(i + 1)
+        ],
+        total: state.total + (state.cart[i].price * value)
+      }
+
     case REMOVE_FROM_CART:
-    console.log(action.payload.price);
-    console.log(action.payload.quantity);
-    
       return {
         ...state,
         cart: state.cart.filter(item => item.id !== action.payload.id),

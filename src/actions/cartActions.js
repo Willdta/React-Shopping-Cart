@@ -59,6 +59,30 @@ export const addItem = (item, value) => (dispatch, getState) => {
   //   })
 }
 
+export const addQuantity = (i, value, cart) => (dispatch, getState) => {
+  const uid = getState().auth.user
+
+  database
+    .ref(`users/${uid}/cart/${cart.key}`)
+    .transaction(data => {
+      return data !== null && {
+        ...data,
+        quantity: data.quantity + value
+      }
+    })
+    .then(() => {
+      database
+        .ref(`users/${uid}/total`)
+        .transaction(data => data + parseInt(cart.price * value, 10))
+    })
+    .then(() => {
+      dispatch({
+        type: 'ADD_QUANTITY',
+        payload: { i, value }
+      })
+    })
+}
+
 export const removeItem = (item, index) => (dispatch, getState) => {
   const uid = getState().auth.user
 
