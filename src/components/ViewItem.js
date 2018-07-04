@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { renderItems } from '../actions/itemActions'
 import { addItem } from '../actions/cartActions'
 import Navbar from './Navbar'
 import '../css/itemStyling.css'
@@ -12,10 +11,6 @@ class ViewItem extends Component {
     quantityErrorMessage: false,
     successMessage: false,
     invalidQuantityMessage: false
-  }
-  
-  componentDidMount = () => {
-    this.props.renderItems()
   }
   
   onChange = e => {
@@ -120,7 +115,7 @@ class ViewItem extends Component {
 
 const mapStateToProps = ({ items }, props) => {
     return items.items !== null ? (
-      { item: Object.values(items.items)
+      { item: items.items
               .map(item => item)
               .find(item => item.id === parseInt(props.match.params.id, 10))
       }) : (
@@ -128,4 +123,4 @@ const mapStateToProps = ({ items }, props) => {
     )
 }
 
-export default connect(mapStateToProps, { addItem, renderItems })(ViewItem)
+export default connect(mapStateToProps, { addItem })(ViewItem)

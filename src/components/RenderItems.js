@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { renderItems } from '../actions/itemActions'
+// import { renderItems } from '../actions/itemActions'
 import RenderItem from './RenderItem'
 import Navbar from './Navbar'
 import '../css/itemStyling.css'
@@ -41,4 +41,4 @@ const mapStateToProps = ({ items }) => ({
   items: items.items
 })
 
-export default connect(mapStateToProps, { renderItems })(RenderItems)
+export default connect(mapStateToProps)(RenderItems)

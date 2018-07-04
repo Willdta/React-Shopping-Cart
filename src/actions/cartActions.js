@@ -59,42 +59,48 @@ export const addItem = (item, value) => (dispatch, getState) => {
   //   })
 }
 
-export const removeItem = item  => (dispatch, getState) => {
+export const removeItem = (item, index) => (dispatch, getState) => {
   const uid = getState().auth.user
 
   database
-    .ref(`users/${uid}/cart/ids`)
+    .ref(`users/${uid}/cart/${index}`)
     .remove()
-    .then(() => {
-      database
-        .ref(`users/${uid}/cart/quantity`)
-        .transaction(data => {
-          return data !== isNaN && {
-            ...data,
-            [item.id]: 0
-          }
-        })
-    })
-    .then(() => {
-      database
-        .ref(`items/${item.id}`)
-        .transaction(data => {
-          return data !== null && {
-            ...data,
-            remaining: 5,
-            quantity: 0
-          }
-        })
-    })
+    // .then(() => {
+    //   database
+    //     .ref(`users/${uid}/cart/quantity`)
+    //     .transaction(data => {
+    //       return data !== isNaN && {
+    //         ...data,
+    //         [item.id]: 0
+    //       }
+    //     })
+    // })
+    // .then(() => {
+    //   database
+    //     .ref(`items/${item.id}`)
+    //     .transaction(data => {
+    //       return data !== null && {
+    //         ...data,
+    //         remaining: 5,
+    //         quantity: 0
+    //       }
+    //     })
+    // })
     .then(() => {
       database
         .ref(`users/${uid}/total`)
-        .transaction(data => parseInt(data - (item.price * item.quantity), 10))
+        .transaction(data => data - parseInt(item.price * item.quantity, 10))
     })
     .then(() => {
       dispatch({
         type: REMOVE_FROM_CART,
-        payload: item.id
+        payload: { 
+          item, 
+          id: item.id, 
+          quantity: item.quantity,
+          index,
+          price: item.price
+        }
       })
     })
 }

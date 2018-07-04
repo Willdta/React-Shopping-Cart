@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { renderItems, renderCart, renderTotal } from '../actions/itemActions'
+import { renderCart, renderTotal } from '../actions/itemActions'
 import RenderCartItem from './RenderCartItem'
 import Navbar from './Navbar'
 
 class RenderCart extends Component {
   componentDidMount = () => {
-    // this.props.renderItems()
     this.props.renderCart()
     this.props.renderTotal()
   }
@@ -21,16 +20,16 @@ class RenderCart extends Component {
         {total > 0 && (
           <h3 className="cart-text">Total: ${ total }</h3>
         )}
-        {cart && total > 0 ? (
+        {cart.length > 0 ? (
           <div className="items-container">
-            {Object.values(cart).map(item => (
+            {cart.map(item => (
               <RenderCartItem 
                 key={item.id} 
                 item={item}
-                id={item.id} 
+                // id={item.id}
+                index={item.key}
               />
-              ))
-            }
+            ))}
           </div>
         ) : (
           <h3>No Items in your cart</h3>
@@ -42,11 +41,9 @@ class RenderCart extends Component {
   render() { return this.renderCart() }
 }
 
-const mapStateToProps = ({ items, cart }) => ({
+const mapStateToProps = ({ cart }) => ({
   total: cart.total,
-  // items: items.items,
-  // cart: items.cart
   cart: cart.cart
 })
 
-export default connect(mapStateToProps, { renderItems, renderCart, renderTotal })(RenderCart)
+export default connect(mapStateToProps, { renderCart, renderTotal })(RenderCart)
