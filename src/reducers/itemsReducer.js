@@ -8,15 +8,34 @@ import {
 } from '../actions/types'
 
 const initialState = {
-  items: null,
-  cart: null,
-  total: 0
+  items: [
+    {
+      id: 1,
+      description: "Sweet shoes produced by the G.O.A.T Kanye West....",
+      image: 'https://www.yeezys.club/image/cache/catalog/TB2ErI.dohnpuFjSZFPXXb_4XXa_!!2914266524-400x400.jpg',
+      name: 'Yeezys',
+      price: 100,
+      quantity: 0,
+      remaining: 5
+    },
+    {
+      id: 2,
+      description: 'This sweater will unlock super Github abilities. It will also make you look super fresh.',
+      image: 'https://cdn.shopify.com/s/files/1/0262/3477/products/product-image-457055122.jpg?v=1510010749',
+      name: 'Github Sweater',
+      price: 50,
+      quantity: 0,
+      remaining: 5
+    }
+  ],
+  // cart: [],
+  // total: 0
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case RENDER_ITEMS:
-      return { ...state, items: action.payload }
+    // case RENDER_ITEMS:
+    //   return { ...state, items: action.payload }
     
     case RENDER_CART:
       return { ...state, cart: action.payload }
@@ -24,19 +43,25 @@ export default (state = initialState, action) => {
     case 'RENDER_TOTAL':
       return { ...state, total: action.payload }
 
-    case ADD_TO_CART:
-      return { 
-        ...state,
-        items: {
-          ...state.items, 
-          [action.payload.id]: {
-            ...state.items[action.payload.id],
-            remaining: state.items[action.payload.id].remaining - action.payload.value,
-            quantity: state.items[action.payload.id].quantity + action.payload.value
-          }
-        },
-        total: state.total + (state.items[action.payload.id].price * action.payload.value)
-      }
+    // case ADD_TO_CART:
+      // return { 
+      //   ...state,
+      //   items: {
+      //     ...state.items, 
+      //     [action.payload.id]: {
+      //       ...state.items[action.payload.id],
+      //       remaining: state.items[action.payload.id].remaining - action.payload.value,
+      //       quantity: state.items[action.payload.id].quantity + action.payload.value
+      //     }
+      //   },
+      //   total: state.total + (state.items[action.payload.id].price * action.payload.value)
+      // }
+
+      // return {
+      //   ...state,
+      //   cart: [...state.cart, { ...action.payload.item, quantity: action.payload.value}],
+      //   total: state.total + (action.payload.price * action.payload.value)
+      // }
 
     case REMOVE_FROM_CART:
       return {

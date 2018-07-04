@@ -36,7 +36,7 @@ class RenderCartItem extends Component {
   }
 
   render() {
-    const { items, id } = this.props
+    const { item, id } = this.props
     const { invalidQuantityMessage, quantityErrorMessage } = this.state
 
     if (invalidQuantityMessage || quantityErrorMessage) {
@@ -49,25 +49,25 @@ class RenderCartItem extends Component {
     }
 
     return (
-      items[id].quantity > 0 && (
+      item.quantity > 0 && (
         <div>
           <div key={id} className="item-container">
-            <img src={items[id].image} alt="shoes" />
-            <h4>{items[id].name}</h4>
-            <h5>Total Item Price: ${items[id].price * items[id].quantity}</h5>
+            <img src={item.image} alt="shoes" />
+            <h4>{item.name}</h4>
+            <h5>Total Item Price: ${item.price * item.quantity}</h5>
             <div className="input-container">
               <input 
                 type="number"
                 min={1}
                 max={5}
-                key={items[id].quantity}
-                defaultValue={items[id].quantity}
-                onBlur={e => this.editCartQuantity(items[id], e)}
+                key={item.quantity}
+                defaultValue={item.quantity}
+                onBlur={e => this.editCartQuantity(item, e)}
                 ref={value => this.value = value}
               />
             </div>
-            <h5>Quantity: {items[id].quantity}</h5>
-            <button className="remove-button button" onClick={() => this.props.removeItem(items[id])}>Remove</button>
+            <h5>Quantity: {item.quantity}</h5>
+            <button className="remove-button button" onClick={() => this.props.removeItem(item)}>Remove</button>
             <button className="edit-button button" onClick={() => this.value.focus()}>Edit</button>
           </div>
 

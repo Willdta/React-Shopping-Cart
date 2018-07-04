@@ -64,15 +64,15 @@ class ViewItem extends Component {
     const { item } = this.props
     const { quantityErrorMessage, successMessage, invalidQuantityMessage, itemQuantity } = this.state
 
-    if (quantityErrorMessage || successMessage || invalidQuantityMessage) {
-      setTimeout(() => {
-        this.setState({
-          quantityErrorMessage: false,
-          invalidQuantityMessage: false,
-          successMessage: false
-        })
-      }, 2000)
-    }
+    // if (quantityErrorMessage || successMessage || invalidQuantityMessage) {
+    //   setTimeout(() => {
+    //     this.setState({
+    //       quantityErrorMessage: false,
+    //       invalidQuantityMessage: false,
+    //       successMessage: false
+    //     })
+    //   }, 2000)
+    // }
 
     return (
       <div>
@@ -123,8 +123,7 @@ const mapStateToProps = ({ items }, props) => {
       { item: Object.values(items.items)
               .map(item => item)
               .find(item => item.id === parseInt(props.match.params.id, 10))
-      }
-    ) : (
+      }) : (
       { item: null }
     )
 }

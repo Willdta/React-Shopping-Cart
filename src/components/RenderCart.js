@@ -6,7 +6,7 @@ import Navbar from './Navbar'
 
 class RenderCart extends Component {
   componentDidMount = () => {
-    this.props.renderItems()
+    // this.props.renderItems()
     this.props.renderCart()
     this.props.renderTotal()
   }
@@ -21,16 +21,18 @@ class RenderCart extends Component {
         {total > 0 && (
           <h3 className="cart-text">Total: ${ total }</h3>
         )}
-        {items && total > 0 ? (
+        {cart && total > 0 ? (
           <div className="items-container">
-            {Object.keys(items).map(id => (
+            {cart.map(item => (
               <RenderCartItem 
-                key={id} 
-                cart={cart} 
-                items={items} 
-                id={id} 
+                key={item.id} 
+                item={item}
+                // cart={cart} 
+                // items={items} 
+                id={item.id} 
               />
-            ))}
+              ))
+            }
           </div>
         ) : (
           <h3>No Items in your cart</h3>
@@ -42,10 +44,11 @@ class RenderCart extends Component {
   render() { return this.renderCart() }
 }
 
-const mapStateToProps = ({ items }) => ({
-  total: items.total,
-  items: items.items,
-  cart: items.cart
+const mapStateToProps = ({ items, cart }) => ({
+  total: cart.total,
+  // items: items.items,
+  // cart: items.cart
+  cart: cart.cart
 })
 
 export default connect(mapStateToProps, { renderItems, renderCart, renderTotal })(RenderCart)

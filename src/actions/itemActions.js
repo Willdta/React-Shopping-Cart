@@ -10,8 +10,10 @@ export const renderItems = () => dispatch => {
   })
 }
 
-export const renderCart = () => dispatch => {
-  database.ref('cart').on('value', snapshot => {
+export const renderCart = () => (dispatch, getState) => {
+  const uid = getState().auth.user
+
+  database.ref(`users/${uid}/cart`).on('value', snapshot => {
     dispatch({
       type: RENDER_CART,
       payload: snapshot.val()
@@ -19,8 +21,10 @@ export const renderCart = () => dispatch => {
   })
 }
 
-export const renderTotal = () => dispatch => {
-  database.ref('total').once('value', snapshot => {
+export const renderTotal = () => (dispatch, getState) => {
+  const uid = getState().auth.user
+
+  database.ref(`users/${uid}/total`).once('value', snapshot => {
     dispatch({
       type: 'RENDER_TOTAL',
       payload: snapshot.val()

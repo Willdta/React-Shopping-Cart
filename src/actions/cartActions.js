@@ -7,53 +7,69 @@ import {
 
 import { database } from '../firebase'
 
-export const addItem = (item, value) => dispatch => {
-  database
-    .ref(`items/${item.id}`)
-    .transaction(data => {
-      return data !== null && { 
-        ...data, 
-        remaining: data.remaining - value, 
-        quantity: data.quantity + value 
-      }
-    })
-    .then(() => {
+export const addItem = (item, value) => (dispatch, getState) => {
+  const uid = getState().auth.user
+
+  // database
+  //   .ref(`items/${item.id}`)
+  //   .transaction(data => {
+  //     return data !== null && { 
+  //       ...data, 
+  //       remaining: data.remaining - value, 
+  //       quantity: data.quantity + value 
+  //     }
+  //   })
+  //   .then(() => {
       database
-        .ref('total')
+        .ref(`users/${uid}/total`)
         .transaction(data => parseInt(data + (item.price * value), 10))
-    })
-    .then(() => {
+
+
       database
-      .ref('cart/quantity')
-      .transaction(data => {
-        return data !== null && {
-          ...data,
-          [item.id]: value
-        }
-      })
-    })
-    .then(() => {
-      database
-        .ref('cart/ids')
-        .push(item.id)
-    })
-    .then(() => {
+        .ref(`users/${uid}/cart`)
+        .push(item)
+
+
+
+  //   })
+  //   .then(() => {
+  //     database
+  //       .ref(`users/${uid}/cart/quantity`)
+  //       .transaction(data => {
+  //         return data !== isNaN && {
+  //           ...data,
+  //           [item.id]: value
+  //         }
+  //       })
+  //   })
+  //   .then(() => {
+  //     database
+  //       .ref(`users/${uid}/cart/ids`)
+  //       .push(item.id)
+  //   })
+  //   .then(() => {
       dispatch({
         type: ADD_TO_CART,
-        payload: { id: item.id, value }
+        payload: { 
+          item,
+          price: item.price, 
+          value 
+        }
       })
-    })
+  //   })
 }
 
-export const removeItem = item  => dispatch => {
+export const removeItem = item  => (dispatch, getState) => {
+  const uid = getState().auth.user
+
   database
-    .ref('cart/ids')
+    .ref(`users/${uid}/cart/ids`)
     .remove()
     .then(() => {
       database
-        .ref('cart/quantity')
+        .ref(`users/${uid}/cart/quantity`)
         .transaction(data => {
-          return data !== null && {
+          return data !== isNaN && {
             ...data,
             [item.id]: 0
           }
@@ -72,7 +88,7 @@ export const removeItem = item  => dispatch => {
     })
     .then(() => {
       database
-        .ref('total')
+        .ref(`users/${uid}/total`)
         .transaction(data => parseInt(data - (item.price * item.quantity), 10))
     })
     .then(() => {
@@ -83,7 +99,9 @@ export const removeItem = item  => dispatch => {
     })
 }
 
-export const incrementCartQuantity = (item, value) => dispatch => {
+export const incrementCartQuantity = (item, value) => (dispatch, getState) => {
+  const uid = getState().auth.user
+
   database
     .ref(`items/${item.id}`)
     .transaction(data => {
@@ -95,9 +113,9 @@ export const incrementCartQuantity = (item, value) => dispatch => {
     })
     .then(() => {
       database
-        .ref('cart/quantity')
+        .ref(`users/${uid}/cart/quantity`)
         .transaction(data => {
-          return data !== null && {
+          return data !== isNaN && {
             ...data,
             [item.id]: value
           }
@@ -105,7 +123,7 @@ export const incrementCartQuantity = (item, value) => dispatch => {
     })
     .then(() => {
       database
-        .ref('total')
+        .ref(`users/${uid}/total`)
         .transaction(data => parseInt(data + item.price * Math.abs(item.quantity - value), 10))
     })
     .then(() => {
@@ -116,7 +134,9 @@ export const incrementCartQuantity = (item, value) => dispatch => {
     })
 }
 
-export const decrementCartQuantity = (item, value) => dispatch => {
+export const decrementCartQuantity = (item, value) => (dispatch, getState) => {
+  const uid = getState().auth.user
+
   database
     .ref(`items/${item.id}`)
     .transaction(data => {
@@ -128,9 +148,9 @@ export const decrementCartQuantity = (item, value) => dispatch => {
     })
     .then(() => {
       database
-        .ref('cart/quantity')
+        .ref(`users/${uid}/cart/quantity`)
         .transaction(data => {
-          return data !== null && {
+          return data !== isNaN && {
             ...data,
             [item.id]: value
           }
@@ -138,7 +158,7 @@ export const decrementCartQuantity = (item, value) => dispatch => {
     })
     .then(() => {
       database
-        .ref('total')
+        .ref(`users/${uid}/total`)
         .transaction(data => parseInt(data - item.price * Math.abs(item.quantity - value), 10))
     })
     .then(() => {
