@@ -8,9 +8,13 @@ import {
 
 class RenderCartItem extends Component {
   state = {
-    invalidQuantityMessage: false,
-    successMessage: false,
-    quantityErrorMessage: false
+    invalidQuantityMessage: false
+  }
+
+  removeAlert = () => {
+    this.setState({
+      invalidQuantityMessage: false
+    })
   }
 
   editCartQuantity = (item, e) => {
@@ -23,12 +27,7 @@ class RenderCartItem extends Component {
       this.setState({
         invalidQuantityMessage: true,
       })
-    } else if (parseInt(value, 10) > item.initialStock) {
-      e.preventDefault()
-      this.setState({
-        quantityErrorMessage: true,
-      })
-    } else if (value > item.quantity) {
+    }  else if (value > item.quantity) {
       this.props.incrementCartQuantity(item, i, parseInt(value, 10))
     } else if (value < item.quantity) {
       this.props.decrementCartQuantity(item, i, parseInt(value, 10))
@@ -36,20 +35,8 @@ class RenderCartItem extends Component {
   }
 
   render() {
-    const { item, index } = this.props
-    const { invalidQuantityMessage, quantityErrorMessage } = this.state
-
-    console.log(this.props.cart);
-    
-
-    if (invalidQuantityMessage || quantityErrorMessage) {
-      setTimeout(() => {
-        this.setState({
-          invalidQuantityMessage: false,
-          quantityErrorMessage: false
-        })
-      }, 1000)
-    }
+    const { item } = this.props
+    const { invalidQuantityMessage } = this.state
 
     return (
       <div>
@@ -69,12 +56,11 @@ class RenderCartItem extends Component {
             />
           </div>
           <h5>Quantity: {item.quantity}</h5>
-          <button className="remove-button button" onClick={() => this.props.removeItem(item, index)}>Remove</button>
+          <button className="remove-button button" onClick={() => this.props.removeItem(item)}>Remove</button>
           <button className="edit-button button" onClick={() => this.value.focus()}>Edit</button>
         </div>
 
-        { quantityErrorMessage ? <h5 className="error-message message">Not enough in stock</h5> : null }
-        { invalidQuantityMessage ? <h5 className="error-message message">Please add a valid quantity</h5> : null }
+        { invalidQuantityMessage && <h5 onClick={() => this.removeAlert()} className="error-message message">Please add a valid quantity</h5> }
       </div>
     )
   }

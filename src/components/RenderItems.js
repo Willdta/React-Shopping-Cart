@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import { renderItems } from '../actions/itemActions'
 import RenderItem from './RenderItem'
 import Navbar from './Navbar'
 import '../css/itemStyling.css'
@@ -9,7 +8,7 @@ class RenderItems extends Component {
   state = {
     searchTerm: ''
   }
-  
+
   render() {
     const { items } = this.props
     const { searchTerm } = this.state

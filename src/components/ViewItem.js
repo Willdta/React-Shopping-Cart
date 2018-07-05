@@ -17,6 +17,13 @@ class ViewItem extends Component {
   componentDidMount = () => {
     this.props.renderCart()
   }
+
+  componentWillUnmount = () => {
+    this.setState({
+      successMessage: false,
+      invalidQuantityMessage: false
+    })
+  }
   
   onChange = e => {
     this.setState({
@@ -24,33 +31,42 @@ class ViewItem extends Component {
     })
   }
 
+  removeAlert = () => {
+    const { invalidQuantityMessage, successMessage } = this.state
+
+    if (invalidQuantityMessage || successMessage) {
+      this.setState({
+        invalidQuantityMessage: false,
+        successMessage: false
+      })
+    }
+  }
+
   addItem = item => {
     const { itemQuantity } = this.state
     const { cart } = this.props
     const i = cart.findIndex(x => x.id === item.id)
 
-    if (itemQuantity > item.remaining) {
-      this.setState({
-        quantityErrorMessage: true
-      })
-    }
-
-    if (itemQuantity === isNaN || itemQuantity === 0 || itemQuantity < 0) {
+    if (itemQuantity === isNaN || itemQuantity === 0 || itemQuantity < 0 || itemQuantity > 5) {
       this.setState({
         invalidQuantityMessage: true
       })
     }
 
-    if (!cart.some(x => x.id === item.id) && itemQuantity > 0 && itemQuantity <= item.remaining && itemQuantity !== isNaN && itemQuantity !== 0) {
+    if (!cart.some(x => x.id === item.id) && itemQuantity > 0 && itemQuantity !== isNaN && itemQuantity !== 0) {
       this.props.addItem(item, itemQuantity)
       
       this.setState({
         successMessage: true
       })
     }
-
-    if (cart.some(x => x.id === item.id)) {
-      this.props.addQuantity(i, itemQuantity, cart[i]) 
+    
+    if (cart.some(x => x.id === item.id) && itemQuantity > 0) {
+      this.props.addQuantity(cart[i], i, itemQuantity) 
+      
+      this.setState({
+        successMessage: true
+      })
     }
   }
 
@@ -68,19 +84,9 @@ class ViewItem extends Component {
 
   render() {
     const { item } = this.props
-    const { quantityErrorMessage, successMessage, invalidQuantityMessage, itemQuantity } = this.state
+    const { successMessage, invalidQuantityMessage, itemQuantity } = this.state
 
     const filteredItem = item.map(item => item).find(item => item.id === parseInt(this.props.match.params.id, 10))
-
-    // if (quantityErrorMessage || successMessage || invalidQuantityMessage) {
-    //   setTimeout(() => {
-    //     this.setState({
-    //       quantityErrorMessage: false,
-    //       invalidQuantityMessage: false,
-    //       successMessage: false
-    //     })
-    //   }, 2000)
-    // }
 
     return (
       <div>
@@ -118,26 +124,16 @@ class ViewItem extends Component {
         ) : (
           <h1 className="loader">Loading...</h1>
         )}
-        { quantityErrorMessage ? <h5 className="error-message message">Not enough in stock</h5> : null }
-        { invalidQuantityMessage ? <h5 className="error-message message">Please add a valid quantity</h5> : null }
-        { successMessage ? <h5 className="success-message message">Successfully added</h5> : null }
+        { invalidQuantityMessage ? <h5 onClick={() => this.removeAlert()}className="error-message message">Please add a valid quantity</h5> : null }
+        { successMessage ? <h5 onClick={() => this.removeAlert()}className="success-message message">Successfully added</h5> : null }
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ items, cart }, props) => {
-    // return items.items !== null ? (
-    //   { item: items.items
-    //           .map(item => item)
-    //           .find(item => item.id === parseInt(props.match.params.id, 10))
-    //   }) : (
-    //   { item: null }
-    // )
-    return {
-      cart: cart.cart,
-      item: items.items
-    }
-}
+const mapStateToProps = ({ items, cart }) => ({
+  cart: cart.cart,
+  item: items.items
+})
 
 export default connect(mapStateToProps, { renderCart, addItem, addQuantity })(ViewItem)

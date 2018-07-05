@@ -27,57 +27,75 @@ export default (state = initialState, action) => {
         total: action.payload
       }
 
-    case ADD_TO_CART:
+    case ADD_TO_CART: {
+      const { item, value, price } = action.payload
+      const { cart, total } = state
+
       return {
         ...state,
         cart: [
-          ...state.cart, 
-          { ...action.payload.item, quantity: action.payload.value }
+          ...cart, 
+          { ...item, quantity: value }
         ],
-        total: state.total + (action.payload.price * action.payload.value)
+        total: total + (price * value)
       }
+    }
 
-    case ADD_QUANTITY:
+    case ADD_QUANTITY: {
       const { i, value } = action.payload
-
+      const { cart, total } = state
+      
       return {
         ...state,
         cart: [
-          ...state.cart.slice(0, i),
-          { ...state.cart[i], quantity: state.cart[i].quantity + value },
-          ...state.cart.slice(i + 1)
+          ...cart.slice(0, i),
+          { ...cart[i], quantity: cart[i].quantity + value },
+          ...cart.slice(i + 1)
         ],
-        total: state.total + (state.cart[i].price * value)
+        total: total + (cart[i].price *value)
       }
-
-    case REMOVE_FROM_CART:
+    }
+    
+    case REMOVE_FROM_CART: {
+      const { id, price, quantity } = action.payload
+      const { cart, total } = state
+      
       return {
         ...state,
-        cart: state.cart.filter(item => item.id !== action.payload.id),
-        total: state.total - (action.payload.price * action.payload.quantity)
+        cart: cart.filter(item => item.id !== id),
+        total: total - (price * quantity)
       }
-
-    case INCREMENT_CART_QUANTITY:
-      return {
-        ...state,
-        cart: [
-          ...state.cart.slice(0, action.payload.i),
-          { ...state.cart[action.payload.i], quantity: action.payload.value },
-          ...state.cart.slice(action.payload.i + 1)
-        ], 
-        total: state.total + action.payload.cartItem.price * Math.abs(action.payload.cartItem.quantity - action.payload.value)
-      }
-
-    case DECREMENT_CART_QUANTITY:
+    }
+    
+    case INCREMENT_CART_QUANTITY: {
+      const { i, value, price, quantity } = action.payload
+      const { cart, total } = state
+      
       return {
         ...state,
         cart: [
-          ...state.cart.slice(0, action.payload.i),
-          { ...state.cart[action.payload.i], quantity: action.payload.value },
-          ...state.cart.slice(action.payload.i + 1)
+          ...cart.slice(0, i),
+          { ...cart[i], quantity: value },
+          ...cart.slice(i + 1)
         ], 
-        total: state.total - action.payload.cartItem.price * Math.abs(action.payload.cartItem.quantity - action.payload.value)
+        total: total + price * Math.abs(quantity - value)
       }
+    }
+    
+    case DECREMENT_CART_QUANTITY: {
+      const { i, value, price, quantity } = action.payload
+      const { cart, total } = state
+      
+      return {
+        ...state,
+        cart: [
+          ...cart.slice(0, i),
+          { ...cart[i], quantity: value },
+          ...cart.slice(i + 1)
+        ], 
+        total: total - price * Math.abs(quantity - value)
+      }
+    }
       
     default: 
       return state
