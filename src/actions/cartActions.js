@@ -5,8 +5,8 @@ import {
   INCREMENT_CART_QUANTITY,
   DECREMENT_CART_QUANTITY
 } from './types'
-
 import { database } from '../firebase'
+import axios from 'axios'
 
 export const addItem = (item, value) => (dispatch, getState) => {
   const uid = getState().auth.user
@@ -126,3 +126,9 @@ export const decrementCartQuantity = ({ key, price, quantity }, i, value) => (di
       })
     })
 }
+
+export const sendMail = message => dispatch => {
+  axios
+    .post('/sendMail', message)
+    .then(() => console.log('Message successfully sent!'))
+  }

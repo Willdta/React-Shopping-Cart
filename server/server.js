@@ -7,7 +7,7 @@ const config = require('./config')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.post('/send', (req, res) => {
+app.post('/sendMail', (req, res) => {
   const { name, email, total } = req.body
   const nameCheck = name
     .split(' ')

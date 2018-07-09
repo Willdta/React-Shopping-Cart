@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import { renderTotal } from '../actions/itemActions'
+import { sendMail } from '../actions/cartActions'
 
 class Checkout extends Component {
   state = {
@@ -26,9 +26,7 @@ class Checkout extends Component {
     const { total } = this.props
     const message = { name, email, total }
 
-    axios
-      .post('/send', message)
-      .then(data => console.log(data))
+    this.props.sendMail(message)
   }
 
   render() {
@@ -60,4 +58,4 @@ const mapStateToProps = ({ cart }) => ({
   total: cart.total
 })
 
-export default connect(mapStateToProps, { renderTotal })(Checkout)
+export default connect(mapStateToProps, { renderTotal, sendMail })(Checkout)
