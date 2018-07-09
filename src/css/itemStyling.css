@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: 'quicksand';
+  font-weight: 400;
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.login-button {
+  margin-top: 20px;
+}
+
+.search-input {
+  padding: 10px;
+  margin-top: 40px;
+  border: 1px solid #dfe4ea;
+  width: 250px;
+}
+
+.items-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.item-container {
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  background: white;
+  margin: 40px;
+  padding: 20px;
+  width: 350px;
+}
+
+.item-container h4 {
+  margin: 20px 0;
+}
+
+.item-container img {
+  height: 200px;
+  width: 200px;
+}
+
+.input-container {
+  display: grid;
+  height: 40px;
+  grid-template-columns: 1fr 3fr 1fr;
+}
+
+.input-container input {
+  height: 40px;
+  grid-column: 2/3;
+  margin: 0 10px;
+  border: 1px solid #dfe4ea;
+  padding: 5px;
+}
+
+.plus {
+  grid-column: 1/2;
+}
+
+.quantity-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.1px solid #dfe4ea;
+  cursor: pointer;
+}
+
+.minus {
+  grid-column: 3/4;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.item-container > .button {
+  height: 30px;
+  width: 100px;
+  border: 1px solid #dfe4ea;
+  background: none;
+  color: black;
+  cursor: pointer;
+}
+
+.item-container > .edit-button {
+  margin-left: 20px;
+}
+
+.item-container h5 {
+  margin: 20px;
+}
+
+.cart-container > h3 {
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 450px) {
+  .item-container {
+    width: 255px;
+  }
+  
+  .item-container > .edit-button {
+    margin-left: 15px;
+  }
+
+  .login-container h1 {
+    font-size: 25px;
+  }
+}
