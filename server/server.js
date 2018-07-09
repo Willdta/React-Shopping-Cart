@@ -16,7 +16,6 @@
 //       <li>${req.body.order}</li>
 //     </ul>
 //   `
-
 //   nodemailer.createTestAccount((err, account) => {
 //     // create reusable transporter object using the default SMTP transport
 //     let transporter = nodemailer.createTransport({
