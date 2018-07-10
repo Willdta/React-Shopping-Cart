@@ -27,7 +27,7 @@ const initialState = {
     {
       id: 4,
       description: 'Almost as cool as the Yeezys, these boosts will boost your performance in the gym. No pun intended.',
-      image: 'http://www.damnyankeesbar.com/images/EVmq5u1lFHbG/Striking-adidas-running-shoes-ultra-boost-men-s-st-ltd-3E7V.jpg',
+      image: 'https://img.runningwarehouse.com/360/ADMUB/10.jpg',
       name: 'Adidas Boosts',
       price: 300,
       quantity: 0
@@ -51,7 +51,7 @@ const initialState = {
     {
       id: 7,
       description: 'An apple a day keeps you coding away.',
-      image: 'http://www.apples.me/thumbnail.asp?file=assets/images/pinklady400X400.jpg&maxx=450&maxy=0',
+      image: 'https://static1.squarespace.com/static/56fd6d45cf80a1aa296f85e5/t/5714e8b02eeb81400007511f/1460988087814/',
       name: 'Apple',
       price: 1,
       quantity: 0
