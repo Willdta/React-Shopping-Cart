@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { renderTotal } from '../actions/itemActions'
 import { sendMail, toggleMessage } from '../actions/cartActions'
+import { emailReg, phoneReg } from '../regex'
 import Navbar from './Navbar'
 
 class Checkout extends Component {
   state = {
     name: '',
-    email: ''
+    phone: '',
+    email: '',
+    errorMessage: false
   }
 
   componentDidMount = () => {
@@ -20,49 +23,68 @@ class Checkout extends Component {
     })
   }
 
+  removeAlert = () => {
+    this.setState({
+      errorMessage: false
+    })
+  }
+
   sendEmail = e => {
     e.preventDefault()
     
-    const { name, email } = this.state
+    const { name, phone, email } = this.state
     const { total } = this.props
     const message = { name, email, total }
-    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-    if (name !== '' && email.match(regex)) {
+    if (name !== '' && email.match(emailReg) && phone.match(phoneReg)) {
       this.props.sendMail(message)
+    }
+
+    if (name === '' || !email.match(emailReg) || !phone.match(phoneReg)) {
+      this.setState({ errorMessage: true })
     }
   }
 
   render() {
-    const { name, email } = this.state
+    const { name, phone, email, errorMessage } = this.state
     const { total, emailSent } = this.props
 
     return (
       <div>
         <Navbar />
-        { total ? <h2>Your total is ${total}</h2> : <h2>Loading</h2> }
+        { total ? <h2 className="total">Your total is ${total}</h2> : <h2 className="total">Loading</h2> }
+        <p>You will receive an email confirmation validating your order.</p>
 
-        <form onSubmit={e => this.sendEmail(e)}>
+        <form className="checkout-form" onSubmit={e => this.sendEmail(e)}>
           <input 
             type="text" 
             placeholder="name"
+            className="checkout-button-style"
             value={name}
             name="name"
             onChange={e => this.onChange(e)}
             />
           <input 
             type="text" 
+            placeholder="phone"
+            className="checkout-button-style"
+            value={phone}
+            name="phone"
+            onChange={e => this.onChange(e)}
+            />
+          <input 
+            type="text" 
             placeholder="email" 
+            className="checkout-button-style"
             value={email}
             name="email" 
             onChange={e => this.onChange(e)} 
           />
-          <input 
-            type="submit" 
-          />
+         <button type="submit" className="checkout-button-style">Submit Order</button>
         </form>
 
-         {emailSent && <h5 onClick={() => this.props.toggleMessage()}className="success-message message">Thanks for ordering!</h5>}
+         { emailSent && <h5 onClick={() => this.props.toggleMessage()} className="success-message message">Thanks for ordering!</h5> }
+         { errorMessage ? <h5 onClick={() => this.removeAlert()} className="error-message message">Your name, phone or email is invalid</h5> : null }
       </div>
     )
   }

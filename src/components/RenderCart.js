@@ -33,7 +33,7 @@ class RenderCart extends Component {
                 />
               ))}
             </div>
-            <Link to="/checkout">Checkout Now</Link>
+            <Link className="checkout-button checkout-button-style" to="/checkout">Checkout Now</Link>
           </div>
         ) : (
           <h3>No Items in your cart</h3>
