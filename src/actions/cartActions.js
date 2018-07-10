@@ -127,8 +127,15 @@ export const decrementCartQuantity = ({ key, price, quantity }, i, value) => (di
     })
 }
 
+export const toggleMessage = () => ({
+  type: 'TOGGLE_MESSAGE'
+})
+
 export const sendMail = message => dispatch => {
+  console.log('I got fired');
+  
   axios
     .post('/sendMail', message)
-    .then(() => console.log('Message successfully sent!'))
+    .then(res => res && dispatch({ type: 'EMAIL_SENT' }))
+    .catch(err => err && dispatch({ type: 'EMAIL_FAIL' }))
   }

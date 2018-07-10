@@ -24,7 +24,7 @@ app.post('/sendMail', (req, res) => {
   `
   
   const transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    service: 'gmail',
     port: 25,
     secure: false,
     auth: {
@@ -37,15 +37,16 @@ app.post('/sendMail', (req, res) => {
   const mailOptions = {
     from: '"Gabriel" <beyondutraining@gmail.com>',
     to: email,
-    subject: 'React Cart', 
-    text: 'Your Order',
+    subject: 'Your Order',
     html: output
   }
 
   transporter.sendMail(mailOptions, (error, info) => {
-    if (error) console.log('ERROR', error)
+    if (error) {
+      console.log('ERROR', error)
+    }
     
-    console.log(info)
+    res.sendStatus(200)  
   })
 })
 
