@@ -10,7 +10,8 @@ import {
 
 const initialState = {
   cart: [],
-  total: 0
+  total: 0,
+  emailSent: false
 }
 
 export default (state = initialState, action) => {
@@ -96,6 +97,24 @@ export default (state = initialState, action) => {
         total: total - price * Math.abs(quantity - value)
       }
     }
+
+    case 'EMAIL_SENT':
+      return {
+        ...state,
+        emailSent: true
+      }
+
+    case 'EMAIL_FAIL':
+      return {
+        ...state,
+        emailSent: false
+      }
+
+    case 'TOGGLE_MESSAGE':
+      return {
+        ...state,
+        emailSent: !state.emailSent
+      }
       
     default: 
       return state

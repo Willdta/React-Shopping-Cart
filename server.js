@@ -1,8 +1,10 @@
-const app = require('express')()
+const express = require('express')
+const path = require('path')
 const port = process.env.PORT || 5000
 const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
-const config = require('./config')
+const keys = require('./config/keys')
+const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -29,7 +31,7 @@ app.post('/sendMail', (req, res) => {
     secure: false,
     auth: {
       user: 'beyondutraining@gmail.com', 
-      pass: config.pass
+      pass: keys.pass
     },
     tls: { rejectUnauthorized: false }
   })
@@ -46,12 +48,12 @@ app.post('/sendMail', (req, res) => {
   })
 })
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static('../client/build'))
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'))
 
-//   app.get('*', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-//   })
-// }
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
 
 app.listen(port, () => console.log(`connected on port ${port}`))

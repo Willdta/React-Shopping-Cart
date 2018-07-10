@@ -84,9 +84,12 @@ class ViewItem extends Component {
 
   render() {
     const { item } = this.props
+    const { id } = this.props.match.params
     const { successMessage, invalidQuantityMessage, itemQuantity } = this.state
 
-    const filteredItem = item.map(item => item).find(item => item.id === parseInt(this.props.match.params.id, 10))
+    const filteredItem = item
+      .map(item => item)
+      .find(item => item.id === parseInt(id, 10))
 
     return (
       <div>

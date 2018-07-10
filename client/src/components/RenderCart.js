@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { renderCart, renderTotal } from '../actions/itemActions'
 import RenderCartItem from './RenderCartItem'
 import Navbar from './Navbar'
@@ -21,15 +22,18 @@ class RenderCart extends Component {
           <h3 className="cart-text">Total: ${ total }</h3>
         )}
         {cart.length > 0 ? (
-          <div className="items-container">
-            {cart.map(item => (
-              <RenderCartItem 
-                key={item.id} 
-                item={item}
-                cart={cart}
-                index={item.key}
-              />
-            ))}
+          <div>
+            <div className="items-container">
+              {cart.map(item => (
+                <RenderCartItem 
+                  key={item.id} 
+                  item={item}
+                  cart={cart}
+                  index={item.key}
+                />
+              ))}
+            </div>
+            <Link className="checkout-button checkout-button-style" to="/checkout">Checkout Now</Link>
           </div>
         ) : (
           <h3>No Items in your cart</h3>

@@ -14,7 +14,6 @@ const Navbar = ({ signoutUser }) => {
       <Link className="cart-link" to="/cart">
         <i className="fas fa-shopping-cart fa-lg"></i>
       </Link>
-      <Link to="/test">Express</Link>
       <button className="logout-button auth-button" onClick={() => signoutUser(history)}>Log out</button>
     </div>
   )
