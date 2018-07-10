@@ -132,10 +132,8 @@ export const toggleMessage = () => ({
 })
 
 export const sendMail = message => dispatch => {
-  console.log('I got fired');
-  
   axios
     .post('/sendMail', message)
     .then(res => res && dispatch({ type: 'EMAIL_SENT' }))
     .catch(err => err && dispatch({ type: 'EMAIL_FAIL' }))
-  }
+}

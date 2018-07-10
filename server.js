@@ -3,7 +3,7 @@ const path = require('path')
 const port = process.env.PORT || 5000
 const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
-const keys = require('./config/keys')
+const pass = require('./config/keys').pass
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -17,8 +17,7 @@ app.post('/sendMail', (req, res) => {
     .join(' ')
 
   const output = `
-    <p>Thanks for shopping with us, ${nameCheck}</p>
-    <br />
+    <p>Thanks for shopping with us, ${nameCheck}.</p>
     <p>Your Total is $${total}</p>
     <hr />
     <p>Gabriel Pozo - React Cart Developer / Owner</p>
@@ -31,7 +30,7 @@ app.post('/sendMail', (req, res) => {
     secure: false,
     auth: {
       user: 'beyondutraining@gmail.com', 
-      pass: keys.pass
+      pass
     },
     tls: { rejectUnauthorized: false }
   })
