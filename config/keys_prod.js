@@ -1,3 +1,3 @@
 module.exports = {
-  pass: process.env.PASS
+  PASS: process.env.PASS
 }
