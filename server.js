@@ -28,14 +28,15 @@ app.post('/sendMail', (req, res) => {
   const transporter = nodemailer.createTransport({
     // service: 'gmail',
     host: 'smtp.gmail.com',
-    // port: 25,
-    // secure: false,
+    port: 465,
+    secure: true,
     auth: {
       type: 'OAuth2',
       user: 'beyondutraining@gmail.com', 
       clientId: keys.clientID,
       clientSecret: keys.clientSecret,
-      refreshToken: keys.refreshToken
+      refreshToken: keys.refreshToken,
+      accessToken: keys.accessToken
     },
     // tls: { rejectUnauthorized: false }
   })
