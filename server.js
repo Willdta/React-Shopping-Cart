@@ -26,7 +26,7 @@ app.post('/sendMail', (req, res) => {
   
   const transporter = nodemailer.createTransport({
     service: 'gmail',
-    port: 25,
+    port,
     secure: false,
     auth: {
       user: 'beyondutraining@gmail.com', 
@@ -44,10 +44,12 @@ app.post('/sendMail', (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      res.sendStatus(500)
+      // res.sendStatus(500)
+      console.log(error);
+      
     }
     
-    res.sendStatus(info)
+    res.sendStatus(200)
   })
 })
 
