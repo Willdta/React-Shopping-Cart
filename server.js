@@ -47,7 +47,7 @@ app.post('/sendMail', (req, res) => {
       res.sendStatus(500)
     }
     
-    res.sendStatus(200)
+    res.sendStatus(info)
   })
 })
 
