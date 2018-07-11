@@ -4,7 +4,7 @@ const port = process.env.PORT || 5000
 const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
 // const smtpTransport = require('nodemailer-smtp-transport')
-const pass = require('./config/keys').pass
+const keys = require('./config/keys')
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -26,15 +26,18 @@ app.post('/sendMail', (req, res) => {
   `
   
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    // service: 'gmail',
     host: 'smtp.gmail.com',
-    port: 25,
-    secure: false,
+    // port: 25,
+    // secure: false,
     auth: {
+      type: 'OAuth2',
       user: 'beyondutraining@gmail.com', 
-      pass
+      clientId: keys.clientID,
+      clientSecret: keys.clientSecret,
+      refreshToken: keys.refreshToken
     },
-    tls: { rejectUnauthorized: false }
+    // tls: { rejectUnauthorized: false }
   })
 
   const mailOptions = {
