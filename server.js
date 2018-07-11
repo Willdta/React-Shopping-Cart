@@ -43,11 +43,9 @@ app.post('/sendMail', (req, res) => {
   }
 
   transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error)
-    } else {
-      res.sendStatus(200)
-    }
+    let statusCode = error ? 500 : 200
+
+    res.sendStatus(statusCode)
   })
 })
 
