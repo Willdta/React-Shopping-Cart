@@ -5,6 +5,7 @@ import { sendMail, toggleMessage } from '../actions/cartActions'
 import { Link } from 'react-router-dom'
 import { phoneReg, emailReg, addressReg, postalReg } from '../regex'
 import Navbar from './Navbar'
+import SelectOptions from './SelectOptions'
 
 class Checkout extends Component {
   state = {
@@ -13,7 +14,7 @@ class Checkout extends Component {
     email: '',
     address: '',
     city: '',
-    province: 'NL',
+    province: '',
     postalCode: '',
     errorMessage: false
   }
@@ -25,12 +26,6 @@ class Checkout extends Component {
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
-    })
-  }
-
-  handleSelect = e => {
-    this.setState({
-      province: e.target.value
     })
   }
 
@@ -107,21 +102,11 @@ class Checkout extends Component {
             name="city"
             onChange={e => this.onChange(e)}
           />
-          <select className="checkout-button-style" value={province} onChange={e => this.handleSelect(e)}>
-            <option value="NL">NL</option>
-            <option value="PE">PE</option>
-            <option value="NS">NS</option>
-            <option value="NB">NB</option>
-            <option value="QC">QC</option>
-            <option value="ON">ON</option>
-            <option value="MB">MB</option>
-            <option value="SK">SK</option>
-            <option value="AB">AB</option>
-            <option value="BC">BC</option>
-            <option value="YT">YT</option>
-            <option value="NT">NT</option>
-            <option value="NU">NU</option>
-          </select>
+          <SelectOptions 
+            name="province" 
+            value={province} 
+            onChange={e => this.onChange(e)}
+          />
           <input 
             type="text" 
             placeholder="postal code"
