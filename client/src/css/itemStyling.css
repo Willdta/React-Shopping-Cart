@@ -127,12 +127,24 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: 20px;
 }
 
-.total {
+.payment-text {
   margin-top: 100px;
   margin-bottom: 20px;
 }
 
-.checkout-form input {
+.disclaimer-text {
+  font-size: 10px;
+}
+
+.email-confirmation-text {
+  margin: 20px;
+}
+
+.preview-cart-link {
+  color: blue;
+}
+
+.checkout-form input, select {
   margin: 10px 0;
 }
 

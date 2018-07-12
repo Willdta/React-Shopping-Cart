@@ -3,7 +3,6 @@ const path = require('path')
 const port = process.env.PORT || 5000
 const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
-// const smtpTransport = require('nodemailer-smtp-transport')
 const keys = require('./config/keys')
 const app = express()
 
@@ -11,15 +10,26 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.post('/sendMail', (req, res) => {
-  const { name, email, total } = req.body
-  const nameCheck = name
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')
-
+  const { name, email, address, city, province, postalCode, total } = req.body
+  const allCapsPostal = postalCode.toUpperCase()
+ 
+  const capitalizer = word => {
+    return word
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+    }
+  
   const output = `
-    <p>Thanks for shopping with us, ${nameCheck}.</p>
+    <p>Thanks for shopping with us, ${capitalizer(name)}.</p>
     <p>Your Total is $${total}</p>
+    <hr />
+    <h4>Shipping Information:</h4>
+    <p>${capitalizer(address)}</p>
+    <p>${capitalizer(city)}</p>
+    <p>${capitalizer(province)}</p>
+    <p>${allCapsPostal}</p>
+    <p>Canada</p>
     <hr />
     <p>Gabriel Pozo - React Cart Developer / Owner</p>
     <a href="https://reactshoppingcart1.herokuapp.com/">Shop</a>
@@ -48,9 +58,7 @@ app.post('/sendMail', (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      // res.sendStatus(500)
-      console.log(error);
-      
+      console.log(error)
     }
     
     res.sendStatus(200)
