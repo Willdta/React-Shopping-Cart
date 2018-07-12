@@ -3,7 +3,10 @@ import {
   ADD_QUANTITY,
   REMOVE_FROM_CART,
   INCREMENT_CART_QUANTITY,
-  DECREMENT_CART_QUANTITY
+  DECREMENT_CART_QUANTITY,
+  TOGGLE_MESSAGE,
+  EMAIL_SENT,
+  EMAIL_FAIL
 } from './types'
 import { database } from '../firebase'
 import axios from 'axios'
@@ -128,12 +131,24 @@ export const decrementCartQuantity = ({ key, price, quantity }, i, value) => (di
 }
 
 export const toggleMessage = () => ({
-  type: 'TOGGLE_MESSAGE'
+  type: TOGGLE_MESSAGE
 })
 
-export const sendMail = message => dispatch => {
+export const sendMail = message => (dispatch, getState) => {
+  const uid = getState().auth.user
+
   axios
     .post('/sendMail', message)
-    .then(res => res && dispatch({ type: 'EMAIL_SENT' }))
-    .catch(err => err && dispatch({ type: 'EMAIL_FAIL' }))
+    .then(res => res && dispatch({ type: EMAIL_SENT }))
+    .then(() => {
+      database
+        .ref(`users/${uid}`)
+        .set({ total: 0 })        
+    })
+    .then(() => {
+      database
+        .ref(`users/${uid}/cart`)
+        .remove()
+    })
+    .catch(err => err && dispatch({ type: EMAIL_FAIL }))
 }

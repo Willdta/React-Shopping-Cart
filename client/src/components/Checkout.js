@@ -80,7 +80,7 @@ class Checkout extends Component {
             name="email" 
             onChange={e => this.onChange(e)} 
           />
-         <button type="submit" className="checkout-button-style">Submit Order</button>
+          <button type="submit" className="checkout-button-style">Submit Order</button>
         </form>
 
          { emailSent && <h5 onClick={() => this.props.toggleMessage()} className="success-message message">Thanks for ordering!</h5> }

@@ -5,7 +5,10 @@ import {
   RENDER_TOTAL,
   REMOVE_FROM_CART,
   INCREMENT_CART_QUANTITY,
-  DECREMENT_CART_QUANTITY
+  DECREMENT_CART_QUANTITY,
+  TOGGLE_MESSAGE,
+  EMAIL_SENT,
+  EMAIL_FAIL
 } from '../actions/types'
 
 const initialState = {
@@ -98,19 +101,21 @@ export default (state = initialState, action) => {
       }
     }
 
-    case 'EMAIL_SENT':
+    case EMAIL_SENT:
       return {
         ...state,
+        cart: [],
+        total: 0,
         emailSent: true
       }
 
-    case 'EMAIL_FAIL':
+    case EMAIL_FAIL:
       return {
         ...state,
         emailSent: false
       }
 
-    case 'TOGGLE_MESSAGE':
+    case TOGGLE_MESSAGE:
       return {
         ...state,
         emailSent: !state.emailSent

@@ -26,7 +26,6 @@ app.post('/sendMail', (req, res) => {
   `
   
   const transporter = nodemailer.createTransport({
-    // service: 'gmail',
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
@@ -37,8 +36,7 @@ app.post('/sendMail', (req, res) => {
       clientSecret: keys.clientSecret,
       refreshToken: keys.refreshToken,
       accessToken: keys.accessToken
-    },
-    // tls: { rejectUnauthorized: false }
+    }
   })
 
   const mailOptions = {
