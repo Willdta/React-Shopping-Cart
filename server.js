@@ -45,8 +45,7 @@ app.post('/sendMail', (req, res) => {
       clientId: keys.clientID,
       clientSecret: keys.clientSecret,
       refreshToken: keys.refreshToken,
-      accessToken: keys.accessToken,
-      // expires: 1484314697598
+      accessToken: keys.accessToken
     }
   })
 
