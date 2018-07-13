@@ -47,6 +47,9 @@ app.post('/sendMail', (req, res) => {
       // clientSecret: keys.clientSecret,
       // refreshToken: keys.refreshToken,
       // accessToken: keys.accessToken
+    },
+    tls: {
+      rejectUnauthorized: false
     }
   })
 
