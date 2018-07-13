@@ -40,12 +40,13 @@ app.post('/sendMail', (req, res) => {
     port: 465,
     secure: true,
     auth: {
-      type: 'OAuth2',
-      user: 'beyondutraining@gmail.com', 
-      clientId: keys.clientID,
-      clientSecret: keys.clientSecret,
-      refreshToken: keys.refreshToken,
-      accessToken: keys.accessToken
+      // type: 'OAuth2',
+      user: 'beyondutraining@gmail.com',
+      pass: keys.pass 
+      // clientId: keys.clientID,
+      // clientSecret: keys.clientSecret,
+      // refreshToken: keys.refreshToken,
+      // accessToken: keys.accessToken
     }
   })
 
