@@ -43,7 +43,9 @@ app.post('/sendMail', (req, res) => {
       user: 'beyondutraining@gmail.com',
       clientId: keys.clientID,
       clientSecret: keys.clientSecret,
-      refreshToken: keys.refreshToken
+      refreshToken: keys.refreshToken,
+      accessToken: keys.accessToken,
+      expires: 1000000000000000000
     }
   })
 
