@@ -48,9 +48,9 @@ app.post('/sendMail', (req, res) => {
       refreshToken: keys.refreshToken,
       // accessToken: keys.accessToken
     },
-    tls: {
-      rejectUnauthorized: false
-    }
+    // tls: {
+    //   rejectUnauthorized: false
+    // }
   })
 
   const mailOptions = {
