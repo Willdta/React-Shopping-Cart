@@ -1,9 +1,10 @@
 const express = require('express')
 const path = require('path')
-const port = process.env.PORT || 5000
 const bodyParser = require('body-parser')
 const nodemailer = require('nodemailer')
+const Oauth2 = require('oauth2')
 const keys = require('./config/keys')
+const port = process.env.PORT || 5000
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -36,17 +37,16 @@ app.post('/sendMail', (req, res) => {
   `
   
   const transporter = nodemailer.createTransport({
-    // host: 'smtp.gmail.com',
+    host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
-      // type: 'OAuth2',
+      type: 'OAuth2',
       user: 'beyondutraining@gmail.com',
-      pass: keys.pass 
-      // clientId: keys.clientID,
-      // clientSecret: keys.clientSecret,
-      // refreshToken: keys.refreshToken,
-      // accessToken: keys.accessToken
+      clientId: keys.clientID,
+      clientSecret: keys.clientSecret,
+      refreshToken: keys.refreshToken,
+      accessToken: keys.accessToken
     },
     tls: {
       rejectUnauthorized: false
@@ -63,9 +63,11 @@ app.post('/sendMail', (req, res) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error)
+    } else {
+      console.log(info)
     }
     
-    res.sendStatus(200)
+    // res.sendStatus(200)
   })
 })
 
