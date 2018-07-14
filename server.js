@@ -37,18 +37,17 @@ app.post('/sendMail', (req, res) => {
   `
   
   const transporter = nodemailer.createTransport({
-    // service: 'Gmail',
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
       type: 'OAuth2',
       user: 'beyondutraining@gmail.com',
-      // pass: keys.pass,
       clientId: keys.clientID,
       clientSecret: keys.clientSecret,
       refreshToken: keys.refreshToken,
-      accessToken: keys.accessToken
+      accessToken: keys.accessToken,
+      expires: 10000000000000000000000000000
     }
   })
 
@@ -58,6 +57,8 @@ app.post('/sendMail', (req, res) => {
     subject: 'Your Order',
     html: output
   }
+
+  transporter.on('token', token => console.log(token))
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
