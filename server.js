@@ -43,8 +43,7 @@ app.post('/sendMail', (req, res) => {
       user: 'beyondutraining@gmail.com',
       clientId: keys.clientID,
       clientSecret: keys.clientSecret,
-      refreshToken: keys.refreshToken,
-      // accessToken: keys.accessToken
+      refreshToken: keys.refreshToken
     }
   })
 
@@ -58,9 +57,11 @@ app.post('/sendMail', (req, res) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error)
-    } 
+    } else {
+      console.log(info)
+    }
     
-    res.sendStatus(200)
+    // res.sendStatus(200)
   })
 })
 
