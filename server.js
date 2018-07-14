@@ -46,8 +46,16 @@ app.post('/sendMail', (req, res) => {
       clientId: keys.clientID,
       clientSecret: keys.clientSecret,
       refreshToken: keys.refreshToken,
-      accessToken: keys.accessToken,
-      expires: 10000000000000000000000000000
+      accessToken: keys.accessToken
+    }
+  })
+
+  transporter.set('oauth2_provision_cb', (user, renew, callback) => {
+    let accessToken = userTokens[user];
+    if (!accessToken) {
+      return callback(new Error('Unknown user'));
+    } else {
+      return callback(null, accessToken);
     }
   })
 
@@ -64,9 +72,6 @@ app.post('/sendMail', (req, res) => {
     if (error) {
       console.log(error)
     } 
-    // else {
-    //   console.log(info)
-    // }
     
     res.sendStatus(200)
   })
