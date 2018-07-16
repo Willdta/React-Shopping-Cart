@@ -3,5 +3,6 @@ module.exports = {
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
   refreshToken: process.env.REFRESH_TOKEN,
-  accessToken: process.env.ACCESS_TOKEN
+  accessToken: process.env.ACCESS_TOKEN,
+  sendgridApiKey: process.env.SENDGRID_API_KEY
 }
