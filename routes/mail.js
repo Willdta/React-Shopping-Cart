@@ -1,5 +1,6 @@
 const express = require('express')
-const mail = require('nodemailer').mail
+// const mail = require('nodemailer').mail
+const sgMail = require('@sendgrid/mail')
 const keys = require('../config/keys')
 const router = express.Router()
 
@@ -36,13 +37,14 @@ router.post('/sendMail', (req, res) => {
     <a href="https://reactshoppingcart1.herokuapp.com/">Shop</a>
   `
 
-  mail({
-    from: "Gabriel <beyondutraining@gmail.com>", 
-    to: email, 
-    subject: "Your Order", 
-    html: output 
-  })
-
+  sgMail.setApiKey(keys.sendgridApiKey)
+  const msg = {
+    to: email,
+    from: 'noreply@reactcart.com',
+    subject: 'Your Order',
+    html: output,
+  }
+  sgMail.send(msg)
 
   // const transporter = nodemailer.createTransport({
   //   host: 'smtp.gmail.com',
