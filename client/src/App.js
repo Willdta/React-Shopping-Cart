@@ -8,6 +8,7 @@ import ViewItem from './components/ViewItem'
 import RenderCart from './components/RenderCart'
 import Login from './components/Login'
 import Checkout from './components/Checkout'
+import ThankYou from './components/ThankYou'
 import './App.css'
 
 export const history = createHistory()
@@ -21,6 +22,7 @@ const App = () => (
         <PrivateRoute exact path="/item/:id" component={ViewItem} />
         <PrivateRoute exact path="/cart" component={RenderCart} />
         <PrivateRoute exact path="/checkout" component={Checkout} />
+        <PrivateRoute exact path="/thank-you" component={ThankYou} />
       </Switch>
     </Router>
   </div>

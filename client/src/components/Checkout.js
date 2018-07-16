@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { renderTotal } from '../actions/itemActions'
-import { sendMail, toggleMessage } from '../actions/cartActions'
+import { sendMail, toggleErrorMessage } from '../actions/cartActions'
 import { Link } from 'react-router-dom'
 import { phoneReg, emailReg, addressReg, postalReg } from '../regex'
 import Navbar from './Navbar'
@@ -39,11 +39,11 @@ class Checkout extends Component {
     e.preventDefault()
     
     const { name, phone, email, address, city, province, postalCode } = this.state
-    const { total } = this.props
+    const { total, history } = this.props
     const message = { name, email, address, city, province, postalCode, total }
 
     if (name !== '' && phone.match(phoneReg) && email.match(emailReg) && address.match(addressReg) && city.length >= 4 && city.length >= 4 && postalCode.match(postalReg)) {
-      this.props.sendMail(message)
+      this.props.sendMail(message, history)
     } else {
       this.setState({ errorMessage: true })
     }
@@ -51,7 +51,7 @@ class Checkout extends Component {
 
   render() {
     const { name, phone, email, address, city, province, postalCode, errorMessage } = this.state
-    const { emailSent } = this.props
+    const { emailFailed } = this.props
 
     return (
       <div>
@@ -118,7 +118,7 @@ class Checkout extends Component {
           <button type="submit" className="checkout-button-style">Submit Order</button>
         </form>
 
-         { emailSent && <h5 onClick={() => this.props.toggleMessage()} className="success-message message">Thanks for ordering!</h5> }
+         { emailFailed && <h5 onClick={() => this.props.toggleErrorMessage()} className="error-message message">Email Failed to Send</h5> }
          { errorMessage ? <h5 onClick={() => this.removeAlert()} className="error-message message">Invalid Credentials</h5> : null }
       </div>
     )
@@ -127,7 +127,7 @@ class Checkout extends Component {
 
 const mapStateToProps = ({ cart }) => ({
   total: cart.total,
-  emailSent: cart.emailSent
+  emailFailed: cart.emailFailed
 })
 
-export default connect(mapStateToProps, { renderTotal, sendMail, toggleMessage })(Checkout)
+export default connect(mapStateToProps, { renderTotal, sendMail, toggleErrorMessage })(Checkout)

@@ -6,7 +6,8 @@ import {
   REMOVE_FROM_CART,
   INCREMENT_CART_QUANTITY,
   DECREMENT_CART_QUANTITY,
-  TOGGLE_MESSAGE,
+  // TOGGLE_SUCCESS_MESSAGE,
+  TOGGLE_ERROR_MESSAGE,
   EMAIL_SENT,
   EMAIL_FAIL
 } from '../actions/types'
@@ -14,7 +15,8 @@ import {
 const initialState = {
   cart: [],
   total: 0,
-  emailSent: false
+  emailSent: false,
+  emailFailed: false
 }
 
 export default (state = initialState, action) => {
@@ -106,19 +108,25 @@ export default (state = initialState, action) => {
         ...state,
         cart: [],
         total: 0,
-        emailSent: true
+        // emailSent: true
       }
 
     case EMAIL_FAIL:
       return {
         ...state,
-        emailSent: false
+        emailFailed: true
       }
 
-    case TOGGLE_MESSAGE:
+    // case TOGGLE_SUCCESS_MESSAGE:
+    //   return {
+    //     ...state,
+    //     emailSent: !state.emailSent,
+    //   }
+
+    case TOGGLE_ERROR_MESSAGE:
       return {
         ...state,
-        emailSent: !state.emailSent
+        emailFailed: !state.emailedFailed,
       }
       
     default: 

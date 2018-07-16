@@ -1,5 +1,4 @@
 const express = require('express')
-// const mail = require('nodemailer').mail
 const sgMail = require('@sendgrid/mail')
 const keys = require('../config/keys')
 const router = express.Router()
@@ -14,6 +13,7 @@ router.post('/sendMail', (req, res) => {
     postalCode,
     total
   } = req.body
+  
   const allCapsPostal = postalCode.toUpperCase()
 
   const capitalizer = word =>
@@ -38,43 +38,17 @@ router.post('/sendMail', (req, res) => {
   `
 
   sgMail.setApiKey(keys.sendgridApiKey)
+  
   const msg = {
     to: email,
     from: 'noreply@reactcart.com',
     subject: 'Your Order',
     html: output,
   }
+
   sgMail.send(msg)
-
-  // const transporter = nodemailer.createTransport({
-  //   host: 'smtp.gmail.com',
-  //   port: 465,
-  //   secure: true,
-  //   auth: {
-  //     type: 'OAuth2',
-  //     user: 'beyondutraining@gmail.com',
-  //     clientId: keys.clientID,
-  //     clientSecret: keys.clientSecret,
-  //     refreshToken: keys.refreshToken,
-  //     // accessToken: keys.accessToken,
-  //     expires: 1000000000000000000
-  //   }
-  // })
-
-  // const mailOptions = {
-  //   from: '"Gabriel" <beyondutraining@gmail.com>',
-  //   to: email,
-  //   subject: 'Your Order',
-  //   html: output
-  // }
-
-  // transporter.sendMail(mailOptions, (error, info) => {
-  //   if (error) {
-  //     console.log(error)
-  //   }
-
-  //   res.sendStatus(200)
-  // })
+    .then(() => res.sendStatus(200))
+    .catch(() => res.sendStatus(400))
 })
 
 module.exports = router

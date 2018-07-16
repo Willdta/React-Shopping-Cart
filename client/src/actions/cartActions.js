@@ -4,7 +4,7 @@ import {
   REMOVE_FROM_CART,
   INCREMENT_CART_QUANTITY,
   DECREMENT_CART_QUANTITY,
-  TOGGLE_MESSAGE,
+  TOGGLE_ERROR_MESSAGE,
   EMAIL_SENT,
   EMAIL_FAIL
 } from './types'
@@ -130,11 +130,11 @@ export const decrementCartQuantity = ({ key, price, quantity }, i, value) => (di
     })
 }
 
-export const toggleMessage = () => ({
-  type: TOGGLE_MESSAGE
+export const toggleErrorMessage = () => ({
+  type: TOGGLE_ERROR_MESSAGE
 })
 
-export const sendMail = message => (dispatch, getState) => {
+export const sendMail = (message, history) => (dispatch, getState) => {
   const uid = getState().auth.user
 
   axios
@@ -150,5 +150,6 @@ export const sendMail = message => (dispatch, getState) => {
         .ref(`users/${uid}/cart`)
         .remove()
     })
+    .then(() => history.push('/thank-you'))
     .catch(err => err && dispatch({ type: EMAIL_FAIL }))
 }
