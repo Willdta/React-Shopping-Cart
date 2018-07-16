@@ -34,7 +34,6 @@ router.post('/sendMail', (req, res) => {
     <p>Canada</p>
     <hr />
     <p>Gabriel Pozo - React Cart Developer / Owner</p>
-    <a href="https://reactshoppingcart1.herokuapp.com/">Shop</a>
   `
 
   sgMail.setApiKey(keys.sendgridApiKey)
