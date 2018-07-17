@@ -139,7 +139,7 @@ export const sendMail = (message, history) => (dispatch, getState) => {
 
   axios
     .post('/sendMail', message)
-    .then(res => res && dispatch({ type: EMAIL_SENT }))
+    .then(() => dispatch({ type: EMAIL_SENT }))
     .then(() => {
       database
         .ref(`users/${uid}`)
@@ -151,5 +151,5 @@ export const sendMail = (message, history) => (dispatch, getState) => {
         .remove()
     })
     .then(() => history.push('/thank-you'))
-    .catch(err => err && dispatch({ type: EMAIL_FAIL }))
+    .catch(() => dispatch({ type: EMAIL_FAIL }))
 }
