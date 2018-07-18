@@ -35,7 +35,7 @@ router.post('/sendMail', (req, res) => {
     to: email,
     from: 'noreply@reactcart.com',
     subject: 'Your Order',
-    html: output,
+    html: output
   }
 
   sgMail.send(msg)
