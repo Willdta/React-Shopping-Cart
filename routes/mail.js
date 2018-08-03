@@ -38,7 +38,8 @@ router.post('/sendMail', (req, res) => {
     html: output
   }
 
-  sgMail.send(msg)
+  sgMail
+    .send(msg)
     .then(() => res.sendStatus(200))
     .catch(() => res.sendStatus(400))
 })

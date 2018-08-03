@@ -10,10 +10,10 @@ const initialState = {
     },
     {
       id: 2,
-      description: 'This sweater will unlock super Github abilities. It will also make you look super fresh.',
-      image: 'https://cdn.shopify.com/s/files/1/0262/3477/products/product-image-457055122.jpg?v=1510010749',
-      name: 'Github Sweater',
-      price: 20,
+      description: 'Boss getting mad at you for mistyping code? Eliminate those problems with this coding keyboard.',
+      image: 'https://gamingpcguru.com/wp-content/uploads/2018/03/Best-Gaming-Keyboard-Under-50-USD.jpg',
+      name: 'Coding Keyboard',
+      price: 50,
       quantity: 0
     },
     {
