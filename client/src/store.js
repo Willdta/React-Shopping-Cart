@@ -13,7 +13,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE || compose
 
 const store = createStore(reducer, {}, composeEnhancers(middleware))
 
-// export default store
+export default store
 
 // import {
 //   createStore,
