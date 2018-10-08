@@ -25,7 +25,10 @@ class RenderItems extends Component {
           />
           <div className="items-container">
             {items.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())).map(item => (
-              <RenderItem item={item} key={item.id} />
+              <RenderItem 
+                item={item} 
+                key={item.id} 
+              />
             ))}
           </div>
         </div>
